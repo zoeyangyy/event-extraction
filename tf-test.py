@@ -11,6 +11,9 @@ from tensorflow.examples.tutorials.mnist import input_data
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+from sklearn.datasets import load_digits
+from sklearn.cross_validation import train_test_split
+
 
 
 def test1():
@@ -152,7 +155,7 @@ def test6():
     mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
     xs = tf.placeholder(tf.float32, [None, 784])
     ys = tf.placeholder(tf.float32, [None, 10])
-    
+
     prediction = add_layer(xs, 784, 10, n_layer=1, activation_function=tf.nn.softmax)
     cross_entropy = tf.reduce_mean(-tf.reduce_sum(ys*tf.log(prediction), reduction_indices=[1]))
     train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
