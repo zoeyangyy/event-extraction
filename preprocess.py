@@ -6,13 +6,14 @@
 # @File        : preprocess.py
 # @Description : ace2005 chinese corpus
 #                trigger % argument | identification & classification
-import jieba,jieba.posseg
+import jieba
+import jieba.posseg
 import os
 import re
 import bs4
 
 
-def text2sequence(wj):
+def trigger_identify(wj):
     dir = '/Users/zoe/Documents/event_extraction/ace_2005_chinese/'+wj+'/adj'
     pathDir = os.listdir(dir)
 
@@ -27,6 +28,8 @@ def text2sequence(wj):
             soup = bs4.BeautifulSoup(file_content, "html5lib")
             events = soup.find_all('event')
             for event in events:
+                type = event['type']
+                subtype = event['subtype']
                 event_mentions = event.find_all('event_mention')
                 for event_mention in event_mentions:
                     text = ''.join(event_mention.extent.charseq.text.split())
@@ -35,19 +38,19 @@ def text2sequence(wj):
                     anchor = event_mention.anchor.charseq.text
                     if next(jieba.cut(anchor)) != anchor:
                         print('anchor被分词')
-                    if count <= 70:
+                    if count <= 66:
                         for w in jieba.posseg.cut(text):
                             if w.word != anchor:
                                 f_write.write(w.word+'\t'+w.flag+'\tO\n')
                             else:
-                                f_write.write(w.word+'\t'+w.flag+'\tB\n')
+                                f_write.write(w.word+'\t'+w.flag+'\tB_'+subtype+'\n')
                         f_write.write('\n')
                     else:
                         for w in jieba.posseg.cut(text):
                             if w.word != anchor:
                                 f_write_test.write(w.word+'\t'+w.flag+'\tO\n')
                             else:
-                                f_write_test.write(w.word+'\t'+w.flag+'\tB\n')
+                                f_write_test.write(w.word+'\t'+w.flag+'\tB_'+subtype+'\n')
                         f_write_test.write('\n')
             print(count)
             f.close()
@@ -55,8 +58,8 @@ def text2sequence(wj):
     f_write_test.close()
 
 
-text2sequence('wl')
-# 97 file
+trigger_identify('wl')
+# 298+238+97=633 file
 # 1398+1382+553 = 3333 mention
 # 中文分词的特例：
 # 1.涉及此案的管理人士如果被提起诉讼且被裁决有罪，则将面临罚款或入狱。"裁决有罪"为一个动词，但被分词
