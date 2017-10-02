@@ -3,7 +3,7 @@
 #
 # @Time        : 2017/9/28 下午2:20
 # @Author      : Zoe
-# @File        : tf-test.py
+# @File        : tf-one.py
 # @Description : tf test
 
 import tensorflow as tf
@@ -241,3 +241,22 @@ def test9_load():
         print("weight:", sess.run(W))
         print("biases:", sess.run(b))
 
+
+def test10_visualize():
+    mnist = input_data.read_data_sets("MNIST_data", one_hot=False)
+
+    trainimg = mnist.train.images
+    trainlabel = mnist.train.labels
+    testimg = mnist.test.images
+    testlabel = mnist.test.labels
+
+    print(testimg[0])
+    print(testlabel[0])
+
+    f, a = plt.subplots(1, 10, figsize=(5, 2))
+    for i in range(10):
+        a[i].imshow(np.reshape(mnist.test.images[i], (28, 28)))
+    plt.show()
+
+
+test10_visualize()

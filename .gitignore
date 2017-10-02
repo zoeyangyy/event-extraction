@@ -1,2 +1,3 @@
-/MNIST_data/
-/my_net/
+/tf_test/MNIST_data/
+/tf_test/my_net/
+/tf_test/logs/
