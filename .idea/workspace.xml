@@ -2,24 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3802da07-cb95-41df-adc0-60564b2baf83" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tf_test/my_net/save_net.ckpt.data-00000-of-00001" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tf_test/my_net/save_net.ckpt.index" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tf_test/my_net/save_net.ckpt.meta" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tf_test/my_net/checkpoint" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tf_test/tf_ae.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tf_test/tf_rnn.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tf_test/tf-test.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/MNIST_data/t10k-images-idx3-ubyte.gz" afterPath="$PROJECT_DIR$/tf_test/MNIST_data/t10k-images-idx3-ubyte.gz" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/MNIST_data/t10k-labels-idx1-ubyte.gz" afterPath="$PROJECT_DIR$/tf_test/MNIST_data/t10k-labels-idx1-ubyte.gz" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/MNIST_data/train-images-idx3-ubyte.gz" afterPath="$PROJECT_DIR$/tf_test/MNIST_data/train-images-idx3-ubyte.gz" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/MNIST_data/train-labels-idx1-ubyte.gz" afterPath="$PROJECT_DIR$/tf_test/MNIST_data/train-labels-idx1-ubyte.gz" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/logs/test/events.out.tfevents.1506778724.zoedeMacBook-Pro.local" afterPath="$PROJECT_DIR$/tf_test/logs/test/events.out.tfevents.1506778724.zoedeMacBook-Pro.local" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/logs/train/events.out.tfevents.1506778723.zoedeMacBook-Pro.local" afterPath="$PROJECT_DIR$/tf_test/logs/train/events.out.tfevents.1506778723.zoedeMacBook-Pro.local" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tf-cnn.py" afterPath="$PROJECT_DIR$/tf_test/tf-cnn.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cnn-test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/preprocess.py" afterPath="$PROJECT_DIR$/preprocess.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -30,33 +15,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="tf-cnn.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tf_test/tf-cnn.py">
+      <file leaf-file-name="preprocess.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/preprocess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="262">
+              <caret line="114" column="10" lean-forward="true" selection-start-line="114" selection-start-column="10" selection-end-line="114" selection-end-column="10" />
+              <folding>
+                <element signature="e#244#256#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tf-one.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tf_test/tf-one.py">
+      <file leaf-file-name="cnn-test.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cnn-test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="498">
-              <caret line="259" column="0" lean-forward="false" selection-start-line="259" selection-start-column="0" selection-end-line="259" selection-end-column="0" />
-              <folding>
-                <element signature="e#462#1067#0" expanded="false" />
-                <element signature="e#1087#1243#0" expanded="false" />
-                <element signature="e#1263#1619#0" expanded="false" />
-                <element signature="e#1639#1858#0" expanded="false" />
-                <element signature="e#1942#2702#0" expanded="false" />
-                <element signature="e#2722#4558#0" expanded="false" />
-                <element signature="e#4578#5720#0" expanded="false" />
-                <element signature="e#5740#7913#0" expanded="false" />
-                <element signature="e#7939#8310#0" expanded="false" />
-                <element signature="e#8335#8687#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="140">
+              <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -85,7 +61,6 @@
         <option value="$PROJECT_DIR$/ace2005.py" />
         <option value="$PROJECT_DIR$/jieba_sogou.py" />
         <option value="$PROJECT_DIR$/sougou.py" />
-        <option value="$PROJECT_DIR$/preprocess.py" />
         <option value="$PROJECT_DIR$/random-forest.py" />
         <option value="$PROJECT_DIR$/tf-cnn.py" />
         <option value="$PROJECT_DIR$/tf-test.py" />
@@ -94,10 +69,12 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/tf_test/tf-test.py" />
         <option value="$PROJECT_DIR$/tf_test/tf-one.py" />
+        <option value="$PROJECT_DIR$/preprocess.py" />
+        <option value="$PROJECT_DIR$/cnn-test.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="x" value="232" />
     <option name="y" value="193" />
     <option name="width" value="1207" />
@@ -140,6 +117,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -147,21 +125,15 @@
               <item name="event-extraction" type="b2602c69:ProjectViewProjectNode" />
               <item name="event-extraction" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="event-extraction" type="b2602c69:ProjectViewProjectNode" />
-              <item name="event-extraction" type="462c0819:PsiDirectoryNode" />
-              <item name="tf_test" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
@@ -181,8 +153,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.tf-one">
-    <configuration name="tf-cnn" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.preprocess">
+    <configuration name="preprocess" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -194,7 +166,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="event-extraction" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tf_test/tf-cnn.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/preprocess.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -269,18 +241,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.tf-test" />
-      <item index="1" class="java.lang.String" itemvalue="Python.tf-cnn" />
-      <item index="2" class="java.lang.String" itemvalue="Python.tf_rnn" />
-      <item index="3" class="java.lang.String" itemvalue="Python.tf_ae" />
-      <item index="4" class="java.lang.String" itemvalue="Python.tf-one" />
+      <item index="1" class="java.lang.String" itemvalue="Python.tf_rnn" />
+      <item index="2" class="java.lang.String" itemvalue="Python.tf_ae" />
+      <item index="3" class="java.lang.String" itemvalue="Python.tf-one" />
+      <item index="4" class="java.lang.String" itemvalue="Python.preprocess" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.tf-one" />
-        <item index="1" class="java.lang.String" itemvalue="Python.tf-test" />
-        <item index="2" class="java.lang.String" itemvalue="Python.tf_ae" />
-        <item index="3" class="java.lang.String" itemvalue="Python.tf_rnn" />
-        <item index="4" class="java.lang.String" itemvalue="Python.tf-cnn" />
+        <item index="0" class="java.lang.String" itemvalue="Python.preprocess" />
+        <item index="1" class="java.lang.String" itemvalue="Python.tf-one" />
+        <item index="2" class="java.lang.String" itemvalue="Python.tf-test" />
+        <item index="3" class="java.lang.String" itemvalue="Python.tf_ae" />
+        <item index="4" class="java.lang.String" itemvalue="Python.tf_rnn" />
       </list>
     </recent_temporary>
   </component>
@@ -307,13 +279,13 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="232" y="193" width="1207" height="811" extended-state="0" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20600858" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17453505" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960895" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39661428" sideWeight="0.5028612" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29608938" sideWeight="0.49713877" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27085853" sideWeight="0.49713877" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286991" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -340,13 +312,37 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/tf_test/tf-cnn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tf_test/tf-one.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1064">
+          <caret line="259" column="0" lean-forward="false" selection-start-line="259" selection-start-column="0" selection-end-line="259" selection-end-column="0" />
+          <folding>
+            <element signature="e#462#1067#0" expanded="false" />
+            <element signature="e#1087#1243#0" expanded="false" />
+            <element signature="e#1263#1619#0" expanded="false" />
+            <element signature="e#1639#1858#0" expanded="false" />
+            <element signature="e#1942#2702#0" expanded="false" />
+            <element signature="e#2722#4558#0" expanded="false" />
+            <element signature="e#4578#5720#0" expanded="false" />
+            <element signature="e#5740#7913#0" expanded="false" />
+            <element signature="e#7939#8310#0" expanded="false" />
+            <element signature="e#8335#8687#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tf_test/tf_ae.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
           <caret line="10" column="23" lean-forward="true" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
-          <folding>
-            <element signature="e#209#273#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -425,13 +421,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-293">
-          <caret line="35" column="9" lean-forward="false" selection-start-line="35" selection-start-column="9" selection-end-line="35" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/random-forest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="343">
@@ -463,7 +452,7 @@
     <entry file="file://$PROJECT_DIR$/tf_test/tf-test.py" />
     <entry file="file://$PROJECT_DIR$/tf_test/tf-one.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="498">
+        <state relative-caret-position="0">
           <caret line="259" column="0" lean-forward="false" selection-start-line="259" selection-start-column="0" selection-end-line="259" selection-end-column="0" />
           <folding>
             <element signature="e#462#1067#0" expanded="false" />
@@ -484,16 +473,31 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2732">
           <caret line="20" column="27" lean-forward="true" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
-          <folding>
-            <element signature="e#209#273#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tf_test/tf-cnn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        <state relative-caret-position="400">
+          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preprocess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="114" column="10" lean-forward="true" selection-start-line="114" selection-start-column="10" selection-end-line="114" selection-end-column="10" />
+          <folding>
+            <element signature="e#244#256#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cnn-test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding />
         </state>
       </provider>
