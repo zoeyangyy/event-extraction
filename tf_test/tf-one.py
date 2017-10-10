@@ -6,14 +6,14 @@
 # @File        : tf-one.py
 # @Description : tf test
 
-import tensorflow as tf
-from tensorflow.examples.tutorials.mnist import input_data
+# import tensorflow as tf
+# from tensorflow.examples.tutorials.mnist import input_data
 import numpy as np
-import matplotlib.pyplot as plt
-import os
-from sklearn.datasets import load_digits
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelBinarizer
+# import matplotlib.pyplot as plt
+# import os
+# from sklearn.datasets import load_digits
+# from sklearn.model_selection import train_test_split
+# from sklearn.preprocessing import LabelBinarizer
 
 
 def test1():
@@ -259,4 +259,23 @@ def test10_visualize():
     plt.show()
 
 
-test10_visualize()
+# test10_visualize()
+
+a = np.arange(0,100).reshape(-1,5,5)
+print(a.shape)
+c = np.row_stack((a, np.arange(0,25).reshape(1,5,5)))
+print(c.shape)
+
+t = list()
+text_mat = np.zeros(shape=(2, 3))
+text_mat1 = np.ones(shape=(2, 3))
+t.append(text_mat)
+t.append(text_mat1)
+print(np.array(t).shape)
+y_tag = ['B_Movement', 'B_Justice', 'B_Transaction', 'B_Contact', 'B_Personnel', 'B_Business', 'B_Life', 'B_Conflict', 'O']
+print(y_tag.index('a'))
+
+y = np.zeros(shape=(32, 1))
+y[0] = y_tag.index('O')
+print(y)
+

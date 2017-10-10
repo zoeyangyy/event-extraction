@@ -11,6 +11,7 @@ import jieba.posseg
 import os
 import re
 import bs4
+import tensorflow as tf
 
 
 def trigger_identify(wj,add_type):
@@ -103,7 +104,7 @@ def evaluation():
     print("recall: ",round(recall,4))
     print("F1: ",round(F1,4))
 
-evaluation()
+# evaluation()
 
 # trigger:
 # 540 118 396 13566 499
@@ -191,3 +192,7 @@ def argument_identify(wj,add_type):
 # li.append(a)
 # if 'B' in list(li[0].keys())[0]:
 #     print('T')
+
+embedding = tf.get_variable("embedding", [32, 100], dtype=tf.float32)
+print(embedding)
+inputs = tf.nn.embedding_lookup(embedding, X_inputs)

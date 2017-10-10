@@ -2,9 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3802da07-cb95-41df-adc0-60564b2baf83" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cnn-test.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/raw_file/test.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tf_test/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tf_test/lstm-mnist.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tf_test/lstm-pos.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tf_test/lstm-pos2.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tf_test/reader.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cnn-test.py" afterPath="$PROJECT_DIR$/cnn-test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/preprocess.py" afterPath="$PROJECT_DIR$/preprocess.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tf_test/tf-one.py" afterPath="$PROJECT_DIR$/tf_test/tf-one.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tf_test/tf_rnn.py" afterPath="$PROJECT_DIR$/tf_test/tf_rnn.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,13 +24,47 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="preprocess.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/preprocess.py">
+      <file leaf-file-name="tf-cnn.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tf_test/tf-cnn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="114" column="10" lean-forward="true" selection-start-line="114" selection-start-column="10" selection-end-line="114" selection-end-column="10" />
+            <state relative-caret-position="271">
+              <caret line="75" column="44" lean-forward="false" selection-start-line="75" selection-start-column="44" selection-end-line="75" selection-end-column="44" />
               <folding>
-                <element signature="e#244#256#0" expanded="true" />
+                <element signature="e#157#180#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tf-one.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tf_test/tf-one.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="250">
+              <caret line="266" column="14" lean-forward="true" selection-start-line="266" selection-start-column="14" selection-end-line="266" selection-end-column="14" />
+              <folding>
+                <element signature="e#476#1081#0" expanded="false" />
+                <element signature="e#1101#1257#0" expanded="false" />
+                <element signature="e#1277#1633#0" expanded="false" />
+                <element signature="e#1653#1872#0" expanded="false" />
+                <element signature="e#1956#2716#0" expanded="false" />
+                <element signature="e#2736#4572#0" expanded="false" />
+                <element signature="e#4592#5734#0" expanded="false" />
+                <element signature="e#5754#7927#0" expanded="false" />
+                <element signature="e#7953#8324#0" expanded="false" />
+                <element signature="e#8349#8701#0" expanded="false" />
+                <element signature="e#8732#9129#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tf_rnn.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tf_test/tf_rnn.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="370">
+              <caret line="55" column="4" lean-forward="false" selection-start-line="55" selection-start-column="4" selection-end-line="55" selection-end-column="4" />
+              <folding>
+                <element signature="e#199#222#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -31,8 +74,14 @@
         <entry file="file://$PROJECT_DIR$/cnn-test.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="140">
-              <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-              <folding />
+              <caret line="207" column="27" lean-forward="false" selection-start-line="207" selection-start-column="27" selection-end-line="207" selection-end-column="27" />
+              <folding>
+                <element signature="e#181#204#0" expanded="true" />
+                <element signature="e#496#1246#0" expanded="false" />
+                <element signature="e#1289#1879#0" expanded="false" />
+                <element signature="e#2089#2285#0" expanded="false" />
+                <element signature="e#2328#2584#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -50,6 +99,10 @@
     <findStrings>
       <find>arg</find>
       <find>examples_to_show</find>
+      <find>drop</find>
+      <find>batch_size</find>
+      <find>X_inputs</find>
+      <find>jieba</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -66,19 +119,24 @@
         <option value="$PROJECT_DIR$/tf-test.py" />
         <option value="$PROJECT_DIR$/tf_rnn.py" />
         <option value="$PROJECT_DIR$/tf_test/tf_ae.py" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/tf_test/tf-test.py" />
-        <option value="$PROJECT_DIR$/tf_test/tf-one.py" />
+        <option value="$PROJECT_DIR$/test.txt" />
+        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/preprocess.py" />
+        <option value="$PROJECT_DIR$/tf_test/lstm-mnist.py" />
+        <option value="$PROJECT_DIR$/tf_test/reader.py" />
+        <option value="$PROJECT_DIR$/tf_test/__init__.py" />
+        <option value="$PROJECT_DIR$/tf_test/lstm-pos2.py" />
+        <option value="$PROJECT_DIR$/tf_test/lstm-pos.py" />
+        <option value="$PROJECT_DIR$/tf_test/tf-one.py" />
+        <option value="$PROJECT_DIR$/tf_test/tf_rnn.py" />
         <option value="$PROJECT_DIR$/cnn-test.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="232" />
-    <option name="y" value="193" />
-    <option name="width" value="1207" />
-    <option name="height" value="811" />
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -117,6 +175,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -125,19 +184,30 @@
               <item name="event-extraction" type="b2602c69:ProjectViewProjectNode" />
               <item name="event-extraction" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="event-extraction" type="b2602c69:ProjectViewProjectNode" />
+              <item name="event-extraction" type="462c0819:PsiDirectoryNode" />
+              <item name="raw_file" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="event-extraction" type="b2602c69:ProjectViewProjectNode" />
+              <item name="event-extraction" type="462c0819:PsiDirectoryNode" />
+              <item name="tf_test" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/raw_file/test.txt" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/raw_file" />
       <recent name="$PROJECT_DIR$/tf_test" />
     </key>
   </component>
@@ -153,8 +223,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.preprocess">
-    <configuration name="preprocess" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.cnn-test">
+    <configuration name="cnn-test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -166,7 +236,41 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="event-extraction" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/preprocess.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cnn-test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <configuration name="lstm-mnist" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tf_test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="event-extraction" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tf_test/lstm-mnist.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <configuration name="lstm-pos" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tf_test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="event-extraction" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tf_test/lstm-pos.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -188,24 +292,7 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="tf-test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="event-extraction" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tf_test/tf-test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
-    <configuration name="tf_ae" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="tf_rnn" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -217,42 +304,25 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="event-extraction" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tf_test/tf_ae.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
-    <configuration name="tf_rnn" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="event-extraction" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tf_test/tf_rnn.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.tf-test" />
-      <item index="1" class="java.lang.String" itemvalue="Python.tf_rnn" />
-      <item index="2" class="java.lang.String" itemvalue="Python.tf_ae" />
-      <item index="3" class="java.lang.String" itemvalue="Python.tf-one" />
-      <item index="4" class="java.lang.String" itemvalue="Python.preprocess" />
+      <item index="0" class="java.lang.String" itemvalue="Python.cnn-test" />
+      <item index="1" class="java.lang.String" itemvalue="Python.lstm-mnist" />
+      <item index="2" class="java.lang.String" itemvalue="Python.tf_rnn" />
+      <item index="3" class="java.lang.String" itemvalue="Python.lstm-pos" />
+      <item index="4" class="java.lang.String" itemvalue="Python.tf-one" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.preprocess" />
-        <item index="1" class="java.lang.String" itemvalue="Python.tf-one" />
-        <item index="2" class="java.lang.String" itemvalue="Python.tf-test" />
-        <item index="3" class="java.lang.String" itemvalue="Python.tf_ae" />
-        <item index="4" class="java.lang.String" itemvalue="Python.tf_rnn" />
+        <item index="0" class="java.lang.String" itemvalue="Python.cnn-test" />
+        <item index="1" class="java.lang.String" itemvalue="Python.tf_rnn" />
+        <item index="2" class="java.lang.String" itemvalue="Python.tf-one" />
+        <item index="3" class="java.lang.String" itemvalue="Python.lstm-pos" />
+        <item index="4" class="java.lang.String" itemvalue="Python.lstm-mnist" />
       </list>
     </recent_temporary>
   </component>
@@ -282,15 +352,15 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17453505" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28540772" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960895" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39661428" sideWeight="0.5028612" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27085853" sideWeight="0.49713877" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31076178" sideWeight="0.49713877" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286991" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33857316" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39903265" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39721945" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32953736" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -307,11 +377,33 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/preprocess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2280">
+          <caret line="114" column="10" lean-forward="true" selection-start-line="114" selection-start-column="10" selection-end-line="114" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cnn-test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding>
+            <element signature="e#181#204#0" expanded="true" />
+            <element signature="e#496#1246#0" expanded="false" />
+            <element signature="e#1289#1879#0" expanded="false" />
+            <element signature="e#2089#2285#0" expanded="false" />
+            <element signature="e#2328#2584#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tf_test/tf-cnn.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -325,16 +417,16 @@
         <state relative-caret-position="1064">
           <caret line="259" column="0" lean-forward="false" selection-start-line="259" selection-start-column="0" selection-end-line="259" selection-end-column="0" />
           <folding>
-            <element signature="e#462#1067#0" expanded="false" />
-            <element signature="e#1087#1243#0" expanded="false" />
-            <element signature="e#1263#1619#0" expanded="false" />
-            <element signature="e#1639#1858#0" expanded="false" />
-            <element signature="e#1942#2702#0" expanded="false" />
-            <element signature="e#2722#4558#0" expanded="false" />
-            <element signature="e#4578#5720#0" expanded="false" />
-            <element signature="e#5740#7913#0" expanded="false" />
-            <element signature="e#7939#8310#0" expanded="false" />
-            <element signature="e#8335#8687#0" expanded="false" />
+            <element signature="e#476#1081#0" expanded="false" />
+            <element signature="e#1101#1257#0" expanded="false" />
+            <element signature="e#1277#1633#0" expanded="false" />
+            <element signature="e#1653#1872#0" expanded="false" />
+            <element signature="e#1956#2716#0" expanded="false" />
+            <element signature="e#2736#4572#0" expanded="false" />
+            <element signature="e#4592#5734#0" expanded="false" />
+            <element signature="e#5754#7927#0" expanded="false" />
+            <element signature="e#7953#8324#0" expanded="false" />
+            <element signature="e#8349#8701#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -351,16 +443,16 @@
         <state relative-caret-position="1064">
           <caret line="259" column="0" lean-forward="true" selection-start-line="259" selection-start-column="0" selection-end-line="259" selection-end-column="0" />
           <folding>
-            <element signature="e#462#1067#0" expanded="false" />
-            <element signature="e#1087#1243#0" expanded="false" />
-            <element signature="e#1263#1619#0" expanded="false" />
-            <element signature="e#1639#1858#0" expanded="false" />
-            <element signature="e#1942#2702#0" expanded="false" />
-            <element signature="e#2722#4558#0" expanded="false" />
-            <element signature="e#4578#5720#0" expanded="false" />
-            <element signature="e#5740#7913#0" expanded="false" />
-            <element signature="e#7939#8310#0" expanded="false" />
-            <element signature="e#8335#8687#0" expanded="false" />
+            <element signature="e#476#1081#0" expanded="false" />
+            <element signature="e#1101#1257#0" expanded="false" />
+            <element signature="e#1277#1633#0" expanded="false" />
+            <element signature="e#1653#1872#0" expanded="false" />
+            <element signature="e#1956#2716#0" expanded="false" />
+            <element signature="e#2736#4572#0" expanded="false" />
+            <element signature="e#4592#5734#0" expanded="false" />
+            <element signature="e#5754#7927#0" expanded="false" />
+            <element signature="e#7953#8324#0" expanded="false" />
+            <element signature="e#8349#8701#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -435,70 +527,209 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tf_test/tf_rnn.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="13" column="10" lean-forward="true" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/tf_test/tf-test.py" />
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="14" lean-forward="true" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
+        <state relative-caret-position="80">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tf_test/tf-test.py" />
-    <entry file="file://$PROJECT_DIR$/tf_test/tf-one.py">
+    <entry file="file://$PROJECT_DIR$/tf_test/my_net/save_net.ckpt.data-00000-of-00001">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="259" column="0" lean-forward="false" selection-start-line="259" selection-start-column="0" selection-end-line="259" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tf_test/my_net/checkpoint">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/tensorflow/python/ops/rnn_cell_impl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tf_test/lstm-mnist.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="56" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
           <folding>
-            <element signature="e#462#1067#0" expanded="false" />
-            <element signature="e#1087#1243#0" expanded="false" />
-            <element signature="e#1263#1619#0" expanded="false" />
-            <element signature="e#1639#1858#0" expanded="false" />
-            <element signature="e#1942#2702#0" expanded="false" />
-            <element signature="e#2722#4558#0" expanded="false" />
-            <element signature="e#4578#5720#0" expanded="false" />
-            <element signature="e#5740#7913#0" expanded="false" />
-            <element signature="e#7939#8310#0" expanded="false" />
-            <element signature="e#8335#8687#0" expanded="false" />
+            <element signature="e#47#70#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tf_test/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="6" column="17" lean-forward="true" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tf_test/reader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1357">
+          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <element signature="e#153#191#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tf_test/lstm-pos2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="79">
+          <caret line="4" column="64" lean-forward="false" selection-start-line="4" selection-start-column="64" selection-end-line="4" selection-end-column="64" />
+          <folding>
+            <element signature="e#170#208#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tf_test/lstm-pos.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="21" column="47" lean-forward="true" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
+          <folding>
+            <element signature="e#47#60#0" expanded="false" />
+            <element signature="e#1935#1948#0" expanded="false" />
+            <element signature="e#3214#3225#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/raw_file/length-distribution.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preprocess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1184">
+          <caret line="11" column="9" lean-forward="true" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/raw_file/test_all.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="581">
+          <caret line="105" column="0" lean-forward="true" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/raw_file/test.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="1311" column="0" lean-forward="false" selection-start-line="1311" selection-start-column="0" selection-end-line="1311" selection-end-column="292" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/raw_file/test_jieba.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="554">
+          <caret line="935" column="0" lean-forward="true" selection-start-line="935" selection-start-column="0" selection-end-line="935" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tf_test/tf_ae.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2732">
-          <caret line="20" column="27" lean-forward="true" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+        <state relative-caret-position="3260">
+          <caret line="170" column="48" lean-forward="false" selection-start-line="170" selection-start-column="48" selection-end-line="170" selection-end-column="48" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tf_test/tf-cnn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        <state relative-caret-position="271">
+          <caret line="75" column="44" lean-forward="false" selection-start-line="75" selection-start-column="44" selection-end-line="75" selection-end-column="44" />
+          <folding>
+            <element signature="e#157#180#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tf_test/tf-one.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="266" column="14" lean-forward="true" selection-start-line="266" selection-start-column="14" selection-end-line="266" selection-end-column="14" />
+          <folding>
+            <element signature="e#476#1081#0" expanded="false" />
+            <element signature="e#1101#1257#0" expanded="false" />
+            <element signature="e#1277#1633#0" expanded="false" />
+            <element signature="e#1653#1872#0" expanded="false" />
+            <element signature="e#1956#2716#0" expanded="false" />
+            <element signature="e#2736#4572#0" expanded="false" />
+            <element signature="e#4592#5734#0" expanded="false" />
+            <element signature="e#5754#7927#0" expanded="false" />
+            <element signature="e#7953#8324#0" expanded="false" />
+            <element signature="e#8349#8701#0" expanded="false" />
+            <element signature="e#8732#9129#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tf_test/tf_rnn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="55" column="4" lean-forward="false" selection-start-line="55" selection-start-column="4" selection-end-line="55" selection-end-column="4" />
+          <folding>
+            <element signature="e#199#222#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/tensorflow/python/framework/common_shapes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="923">
+          <caret line="658" column="0" lean-forward="false" selection-start-line="658" selection-start-column="0" selection-end-line="658" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess.py">
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="114" column="10" lean-forward="true" selection-start-line="114" selection-start-column="10" selection-end-line="114" selection-end-column="10" />
-          <folding>
-            <element signature="e#244#256#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="185">
+          <caret line="1025" column="0" lean-forward="false" selection-start-line="1025" selection-start-column="0" selection-end-line="1025" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cnn-test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
-          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
+          <caret line="207" column="27" lean-forward="false" selection-start-line="207" selection-start-column="27" selection-end-line="207" selection-end-column="27" />
+          <folding>
+            <element signature="e#181#204#0" expanded="true" />
+            <element signature="e#496#1246#0" expanded="false" />
+            <element signature="e#1289#1879#0" expanded="false" />
+            <element signature="e#2089#2285#0" expanded="false" />
+            <element signature="e#2328#2584#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
