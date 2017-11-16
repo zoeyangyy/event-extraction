@@ -18,12 +18,18 @@ def trigger_identify(wj,add_type):
     dir = '/Users/zoe/Documents/event_extraction/ace_2005_chinese/'+wj+'/adj'
     pathDir = os.listdir(dir)
 
-    f_write = open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all.txt', add_type)
-    f_write_test = open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all_test.txt', add_type)
+    # f_write = open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all.txt', add_type)
+    # f_write_test = open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all_test.txt', add_type)
+
+    f_write = open('/Users/zoe/Documents/data130006助教/小作业3/trigger_train.txt', add_type)
+    f_write_test = open('/Users/zoe/Documents/data130006助教/小作业3/trigger_test.txt', add_type)
 
     file_num = len([file for file in pathDir])/4
     count = 0
     sep_tri = 0
+    one_word = 0
+    train = 0
+    test = 0
 
     for file in pathDir:
         if re.search(r'apf.xml', file):
@@ -41,27 +47,39 @@ def trigger_identify(wj,add_type):
                     anchor = event_mention.anchor.charseq.text
                     if next(jieba.cut(anchor)) != anchor:
                         sep_tri += 1
-                    if count <= file_num * 0.7:
+                        continue
+                    if text == anchor:
+                        one_word += 1
+                        continue
+                    if count <= file_num * 0.8:
                         for w in jieba.posseg.cut(text):
                             if w.word != anchor:
-                                f_write.write(w.word+'\t'+w.flag+'\tO\n')
+                                # f_write.write(w.word+'\t'+w.flag+'\tO\n')
+                                f_write.write(w.word + '\tO\n')
                             else:
-                                f_write.write(w.word+'\t'+w.flag+'\tB_'+type+'\n')
+                                f_write.write(w.word+'\tT_'+type+'\n')
                         f_write.write('\n')
+                        train += 1
                     else:
                         for w in jieba.posseg.cut(text):
                             if w.word != anchor:
-                                f_write_test.write(w.word+'\t'+w.flag+'\tO\n')
+                                f_write_test.write(w.word+'\tO\n')
                             else:
-                                f_write_test.write(w.word+'\t'+w.flag+'\tB_'+type+'\n')
+                                f_write_test.write(w.word+'\tT_'+type+'\n')
                         f_write_test.write('\n')
+                        test += 1
             print(count)
             f.close()
     print('anchor被分词:', sep_tri)
+    print('only one word:', one_word)
+    print('train:', train)
+    print('test:', test)
     f_write.close()
     f_write_test.close()
 
 
+# trigger_identify('bn', 'w')
+# trigger_identify('nw', 'a')
 # trigger_identify('wl', 'a')
 
 # 298+238+97=633 file
@@ -73,27 +91,45 @@ def trigger_identify(wj,add_type):
 # 1398 mention: sep_tri = 103
 # 2.有些新闻extent只有一个词就是trigger
 
-def evaluation():
+# anchor被分词: 103
+# only one word: 46
+# train: 849
+# test: 400
+
+# anchor被分词: 58
+# only one word: 58
+# train: 810
+# test: 456
+
+# anchor被分词: 20
+# only one word: 34
+# train: 306
+# test: 193
+
+def evaluation(i):
     f_read = open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all_argu_result', 'r')
+    # f_read = open('raw_file/test_result.txt', 'r')
     contents = f_read.readlines()
     f_read.close()
 
     m1, m2, m3, m4 = 0, 0, 0, 0
     type_correct = 0
+    tp = set()
     for word in contents:
         if word.strip():
-            li = word.strip().split('\t')
-            if li[2] != 'O':
-                if li[3] != 'O':
+            li = word.strip().split()
+            if li[2-i] != 'O':
+                tp.add(li[2-i])
+                if li[3-i] != 'O':
                     m1 += 1
-                    if li[3] == li[2]:
+                    if li[3-i] == li[2-i]:
                         type_correct += 1
-                if li[3] == 'O':
+                if li[3-i] == 'O':
                     m3 += 1
-            if li[2] == 'O':
-                if li[3] != 'O':
+            if li[2-i] == 'O':
+                if li[3-i] != 'O':
                     m2 += 1
-                if li[3] == 'O':
+                if li[3-i] == 'O':
                     m4 += 1
     print(m1, m2, m3, m4, type_correct)
     precision = m1/(m1+m2)
@@ -103,12 +139,15 @@ def evaluation():
     print("precision: ",round(precision, 4))
     print("recall: ",round(recall,4))
     print("F1: ",round(F1,4))
+    print(tp)
+    print(len(tp))
 
-# evaluation()
+# evaluation(0)
 
 # trigger:
 # 540 118 396 13566 499
 # type_correct:  0.9241
+
 # precision:  0.8207
 # recall:  0.5769
 # F1:  0.6775
@@ -116,17 +155,29 @@ def evaluation():
 # argument
 # 3489 708 2465 5759 1446
 # type_correct:  0.4144
+
 # precision:  0.8313
 # recall:  0.586
 # F1:  0.6874
+
+# pytorch:
+# trigger:
+# 274 412 112 9382 264
+# type_correct:  0.9635
+# precision:  0.3994
+# recall:  0.7098
+# F1:  0.5112
 
 
 def argument_identify(wj,add_type):
     dir = '/Users/zoe/Documents/event_extraction/ace_2005_chinese/'+wj+'/adj'
     pathDir = os.listdir(dir)
 
-    f_write = open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all_argu.txt', add_type)
-    f_write_test = open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all_argu_test.txt', add_type)
+    # f_write = open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all_argu.txt', add_type)
+    # f_write_test = open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all_argu_test.txt', add_type)
+
+    f_write = open('/Users/zoe/Documents/data130006助教/小作业3/argu_train_old.txt', add_type)
+    f_write_test = open('/Users/zoe/Documents/data130006助教/小作业3/argu_test_old.txt', add_type)
 
     file_num = len([file for file in pathDir])/4
     count = 0
@@ -149,6 +200,7 @@ def argument_identify(wj,add_type):
                         argu[name] = argument['role']
                     text_li = list()
                     index_list = list()
+                    index_list.append(len(text))
                     for key in argu.keys():
                         index = text.find(key)
                         index_end = index+len(key)
@@ -158,33 +210,35 @@ def argument_identify(wj,add_type):
                     for i in sorted(index_list):
                         text_li.append(text[j:i])
                         j = i
-                    if count <= file_num * 0.7:
+                    if count <= file_num * 0.75:
                         for text in text_li:
                             if text in list(argu.keys()):
                                 type = argu[text]
                                 for w in jieba.posseg.cut(text):
-                                    f_write.write(w.word+'\t'+w.flag+'\tB_'+type+'\n')
+                                    # f_write.write(w.word+'\t'+w.flag+'\tA_'+type+'\n')
+                                    f_write.write(w.word +'\tA_' + type + '\n')
                             else:
                                 for w in jieba.posseg.cut(text):
-                                    f_write.write(w.word+'\t'+w.flag+'\tO\n')
+                                    f_write.write(w.word+'\tO\n')
                         f_write.write('\n')
                     else:
                         for text in text_li:
                             if text in list(argu.keys()):
                                 type = argu[text]
                                 for w in jieba.posseg.cut(text):
-                                    f_write_test.write(w.word+'\t'+w.flag+'\tB_'+type+'\n')
+                                    f_write_test.write(w.word+'\tA_'+type+'\n')
                             else:
                                 for w in jieba.posseg.cut(text):
-                                    f_write_test.write(w.word+'\t'+w.flag+'\tO\n')
+                                    f_write_test.write(w.word+'\tO\n')
                         f_write_test.write('\n')
             print(count)
             f.close()
     f_write.close()
     f_write_test.close()
 
-
-# argument_identify('wl', 'a')
+argument_identify('bn', 'w')
+argument_identify('nw', 'a')
+argument_identify('wl', 'a')
 
 # li = list()
 # a = dict()
@@ -193,6 +247,6 @@ def argument_identify(wj,add_type):
 # if 'B' in list(li[0].keys())[0]:
 #     print('T')
 
-embedding = tf.get_variable("embedding", [32, 100], dtype=tf.float32)
-print(embedding)
-inputs = tf.nn.embedding_lookup(embedding, X_inputs)
+# embedding = tf.get_variable("embedding", [32, 100], dtype=tf.float32)
+# print(embedding)
+# inputs = tf.nn.embedding_lookup(embedding, X_inputs)

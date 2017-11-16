@@ -261,21 +261,30 @@ def test10_visualize():
 
 # test10_visualize()
 
-a = np.arange(0,100).reshape(-1,5,5)
-print(a.shape)
-c = np.row_stack((a, np.arange(0,25).reshape(1,5,5)))
-print(c.shape)
+def test11_npshape():
+    a = np.arange(0,100).reshape(-1,5,5)
+    print(a.shape)
+    c = np.row_stack((a, np.arange(0,25).reshape(1,5,5)))
+    print(c.shape)
 
-t = list()
-text_mat = np.zeros(shape=(2, 3))
-text_mat1 = np.ones(shape=(2, 3))
-t.append(text_mat)
-t.append(text_mat1)
-print(np.array(t).shape)
-y_tag = ['B_Movement', 'B_Justice', 'B_Transaction', 'B_Contact', 'B_Personnel', 'B_Business', 'B_Life', 'B_Conflict', 'O']
-print(y_tag.index('a'))
+    t = list()
+    text_mat = np.zeros(shape=(2, 3))
+    text_mat1 = np.ones(shape=(2, 3))
+    t.append(text_mat)
+    t.append(text_mat1)
+    print(np.array(t).shape)
+    y_tag = ['B_Movement', 'B_Justice', 'B_Transaction', 'B_Contact', 'B_Personnel', 'B_Business', 'B_Life', 'B_Conflict', 'O']
+    print(y_tag.index('a'))
 
-y = np.zeros(shape=(32, 1))
-y[0] = y_tag.index('O')
-print(y)
+    y = np.zeros(shape=(32, 1))
+    y[0] = y_tag.index('O')
+    print(y)
 
+import random
+a = [[[1,2],[3,4]],[[5,6],[7,8]]]
+b = [[['a','b'],['c','d']],[['e','f'],['g','h']]]
+c = list(zip(a, b))
+random.shuffle(c)
+a[:], b[:] = zip(*c)
+print(a)
+print(b)

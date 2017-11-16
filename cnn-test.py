@@ -5,6 +5,7 @@
 # @Author      : Zoe
 # @File        : cnn-test.py
 # @Description : event-extraction lstm function
+# 修改：不均衡问题／ 占位符不算cost／mask／dropout／output后加激活函数／embedding_lookup／
 
 import tensorflow as tf
 import jieba
@@ -72,20 +73,24 @@ def create_text():
     print(i)
     f_all.close()
 
-# f = open('raw_file/test_all.txt','r')
-# a = f.readlines()
-# f.close()
-# f = open('raw_file/test_jieba.txt', 'w')
-# for one in a:
-#     f.write(' '.join(jieba.cut(one)))
-# f.close()
+
+def jieba_cut():
+    f = open('raw_file/contents.txt','r')
+    a = f.readlines()
+    f.close()
+    f = open('raw_file/test_jieba.txt', 'w')
+    for one in a:
+        f.write(' '.join(jieba.cut(one)))
+    f.close()
+
+# jieba_cut()
 
 def create_model():
     # inp为输入语料
     inp = 'raw_file/test_jieba.txt'
     # outp1 为输出模型
     outp1 = 'raw_file/text100.model'
-    model = Word2Vec(LineSentence(inp), size=100, window=5, min_count=5)
+    model = Word2Vec(LineSentence(inp), size=100, window=5, min_count=20)
     model.save(outp1)
 
 # create_model()
@@ -105,7 +110,7 @@ def model_usage():
 
 # model_usage()
 
-model = gensim.models.Word2Vec.load("raw_file/text100.model")
+# model = gensim.models.Word2Vec.load("raw_file/text100.model")
 
 def get_xy():
     with open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all.txt', 'r') as f:
@@ -137,6 +142,40 @@ def get_xy():
     # x_mat.shape = [-1, 32, 100]  =>  (2296, 32, 100)
     return np.array(x_mat_list), np.array(y_tag_list)
 
+
+def get_xy_index():
+    with open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all.txt', 'r') as f:
+        content = f.readlines()
+    word_dict = {}
+    for one in content:
+        if one.strip():
+            one = one.strip().split()[0]
+            if one not in word_dict:
+                word_dict[one] = len(word_dict)
+    s = 0
+    x_mat_list = list()
+    x_mat = np.zeros(shape=(32, 1))
+    y_tag_list = list()
+    y_tag = np.zeros(shape=(32, 10))
+    y_tag_index = ['no_word', 'B_Movement', 'B_Justice', 'B_Transaction', 'B_Contact', 'B_Personnel', 'B_Business',
+                   'B_Life', 'B_Conflict', 'O']
+    for one in content:
+        if one.strip() and s < 32:
+            x_mat[s] = word_dict[one.strip().split()[0]]
+            y_tag[s][y_tag_index.index(one.strip().split()[2])] = 1
+            s += 1
+        else:
+            s = 0
+            x_mat_list.append(x_mat)
+            y_tag_list.append(y_tag)
+            x_mat = np.zeros(shape=(32, 1))
+            y_tag = np.zeros(shape=(32, 10))
+
+    return np.array(x_mat_list), np.array(y_tag_list)
+
+x, y = get_xy_index()
+print(x)
+print(y)
 
 # print(x_mat_list.shape, y_tag_list.shape,y_tag_list[0][0])
 # mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
@@ -189,32 +228,38 @@ def RNN(X, weights, biases):
     return results
 
 
-pred = RNN(x, weights, biases)
-cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=y))
-train_op = tf.train.AdamOptimizer(lr).minimize(cost)
+# pred = RNN(x, weights, biases)
+# cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=y))
+# train_op = tf.train.AdamOptimizer(lr).minimize(cost)
+#
+# correct_pred = tf.equal(tf.argmax(pred,1),tf.argmax(y,1))
+# accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
+#
+# init = tf.global_variables_initializer()
+# x_mat_list,y_tag_list = get_xy()
+# # shuffle x y
+# zip_list = list(zip(x_mat_list, y_tag_list))
+# random.shuffle(zip_list)
+# x_mat_list[:], y_tag_list[:] = zip(*zip_list)
+#
+# with tf.Session() as sess:
+#     sess.run(init)
+#     step = 0
+#     while step * batch_size < training_iters:
+#         # batch_xs, batch_ys = mnist.train.next_batch(batch_size)
+#         start = random.randint(0, x_mat_list.shape[0]-batch_size)
+#         batch_xs, batch_ys= x_mat_list[start:start+batch_size], y_tag_list[start:start+batch_size]
+#         batch_ys = np.reshape(batch_ys, [-1, n_classes])
+#         # batch_xs = batch_xs.reshape([batch_size, n_steps, n_inputs])
+#         sess.run([train_op],feed_dict={
+#             x: batch_xs,
+#             y: batch_ys,
+#         })
+#         if step % 20 == 0:
+#             print(sess.run(accuracy, feed_dict={
+#                 x: batch_xs,
+#                 y: batch_ys
+#             }))
+#         step += 1
 
-correct_pred = tf.equal(tf.argmax(pred,1),tf.argmax(y,1))
-accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
-init = tf.global_variables_initializer()
-x_mat_list,y_tag_list = get_xy()
-
-with tf.Session() as sess:
-    sess.run(init)
-    step = 0
-    while step * batch_size < training_iters:
-        # batch_xs, batch_ys = mnist.train.next_batch(batch_size)
-        start = random.randint(0, x_mat_list.shape[0]-batch_size)
-        batch_xs, batch_ys= x_mat_list[start:start+batch_size], y_tag_list[start:start+batch_size]
-        batch_ys = np.reshape(batch_ys, [-1, n_classes])
-        # batch_xs = batch_xs.reshape([batch_size, n_steps, n_inputs])
-        sess.run([train_op],feed_dict={
-            x: batch_xs,
-            y: batch_ys,
-        })
-        if step % 20 == 0:
-            print(sess.run(accuracy, feed_dict={
-                x: batch_xs,
-                y: batch_ys
-            }))
-        step += 1
