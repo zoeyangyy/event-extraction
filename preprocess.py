@@ -107,8 +107,8 @@ def trigger_identify(wj,add_type):
 # test: 193
 
 def evaluation(i):
-    f_read = open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all_argu_result', 'r')
-    # f_read = open('raw_file/test_result.txt', 'r')
+    # f_read = open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all_argu_result', 'r')
+    f_read = open('raw_file/argu_result.txt', 'r')
     contents = f_read.readlines()
     f_read.close()
 
@@ -142,7 +142,7 @@ def evaluation(i):
     print(tp)
     print(len(tp))
 
-# evaluation(0)
+evaluation(2)
 
 # trigger:
 # 540 118 396 13566 499
@@ -153,12 +153,12 @@ def evaluation(i):
 # F1:  0.6775
 
 # argument
-# 3489 708 2465 5759 1446
-# type_correct:  0.4144
+# 2642 825 2482 6871 1222
+# type_correct:  0.4625
 
-# precision:  0.8313
-# recall:  0.586
-# F1:  0.6874
+# precision:  0.762
+# recall:  0.5156
+# F1:  0.6151
 
 # pytorch:
 # trigger:
@@ -168,16 +168,21 @@ def evaluation(i):
 # recall:  0.7098
 # F1:  0.5112
 
+# argument:
+# type_correct:  0.3077
+# precision:  0.3806
+# recall:  0.6249
+# F1:  0.4731
 
 def argument_identify(wj,add_type):
     dir = '/Users/zoe/Documents/event_extraction/ace_2005_chinese/'+wj+'/adj'
     pathDir = os.listdir(dir)
 
-    # f_write = open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all_argu.txt', add_type)
-    # f_write_test = open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all_argu_test.txt', add_type)
+    f_write = open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all_argu.txt', add_type)
+    f_write_test = open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all_argu_test.txt', add_type)
 
-    f_write = open('/Users/zoe/Documents/data130006助教/小作业3/argu_train_old.txt', add_type)
-    f_write_test = open('/Users/zoe/Documents/data130006助教/小作业3/argu_test_old.txt', add_type)
+    # f_write = open('/Users/zoe/Documents/data130006助教/小作业3/argu_train_old.txt', add_type)
+    # f_write_test = open('/Users/zoe/Documents/data130006助教/小作业3/argu_test_old.txt', add_type)
 
     file_num = len([file for file in pathDir])/4
     count = 0
@@ -210,35 +215,35 @@ def argument_identify(wj,add_type):
                     for i in sorted(index_list):
                         text_li.append(text[j:i])
                         j = i
-                    if count <= file_num * 0.75:
+                    if count <= file_num * 0.7:
                         for text in text_li:
                             if text in list(argu.keys()):
                                 type = argu[text]
                                 for w in jieba.posseg.cut(text):
                                     # f_write.write(w.word+'\t'+w.flag+'\tA_'+type+'\n')
-                                    f_write.write(w.word +'\tA_' + type + '\n')
+                                    f_write.write(w.word+'\t'+w.flag +'\tA_' + type + '\n')
                             else:
                                 for w in jieba.posseg.cut(text):
-                                    f_write.write(w.word+'\tO\n')
+                                    f_write.write(w.word+'\t'+w.flag+'\tO\n')
                         f_write.write('\n')
                     else:
                         for text in text_li:
                             if text in list(argu.keys()):
                                 type = argu[text]
                                 for w in jieba.posseg.cut(text):
-                                    f_write_test.write(w.word+'\tA_'+type+'\n')
+                                    f_write_test.write(w.word+'\t'+w.flag+'\tA_'+type+'\n')
                             else:
                                 for w in jieba.posseg.cut(text):
-                                    f_write_test.write(w.word+'\tO\n')
+                                    f_write_test.write(w.word+'\t'+w.flag+'\tO\n')
                         f_write_test.write('\n')
             print(count)
             f.close()
     f_write.close()
     f_write_test.close()
 
-argument_identify('bn', 'w')
-argument_identify('nw', 'a')
-argument_identify('wl', 'a')
+# argument_identify('bn', 'w')
+# argument_identify('nw', 'a')
+# argument_identify('wl', 'a')
 
 # li = list()
 # a = dict()
