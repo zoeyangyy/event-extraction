@@ -7,6 +7,7 @@ import torch.nn as nn             # 神经网络模块
 import torch.nn.functional as F   # 神经网络模块中的常用功能
 import torch.optim as optim       # 模型优化器模块
 import numpy as np
+
 training_data=[]
 file=open('/Users/zoe/Documents/event_extraction/CRF++-0.58/example/sequence/all_argu.txt','r')
 lines=file.readlines()

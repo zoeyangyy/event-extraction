@@ -171,11 +171,9 @@ def get_xy_index():
             x_mat = np.zeros(shape=(32, 1))
             y_tag = np.zeros(shape=(32, 10))
 
-    return np.array(x_mat_list), np.array(y_tag_list)
+    return np.array(x_mat_list), np.array(y_tag_list), len(word_dict)
 
-x, y = get_xy_index()
-print(x)
-print(y)
+x, y, embeddingLens = get_xy_index()
 
 # print(x_mat_list.shape, y_tag_list.shape,y_tag_list[0][0])
 # mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
@@ -192,6 +190,7 @@ n_classes = 10
 
 x = tf.placeholder(tf.float32,[None, n_steps, n_inputs])
 y = tf.placeholder(tf.float32,[None, n_classes])
+embedding = tf.Variable(np.identity(embeddingLens, dtype=np.int32))
 
 weights = {
     # （100，128）
@@ -204,8 +203,10 @@ biases = {
     'out': tf.Variable(tf.constant(0.1, shape=[n_classes]))
 }
 
+# f = open('raw_file/tensor_result.txt', 'w')
 
 def RNN(X, weights, biases):
+
 
     # hidden layer for input to cell
     # x = (64 batch, 32 step, 100 input) => (64*32, 100 input)
@@ -228,38 +229,40 @@ def RNN(X, weights, biases):
     return results
 
 
-# pred = RNN(x, weights, biases)
-# cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=y))
-# train_op = tf.train.AdamOptimizer(lr).minimize(cost)
-#
-# correct_pred = tf.equal(tf.argmax(pred,1),tf.argmax(y,1))
-# accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
-#
-# init = tf.global_variables_initializer()
-# x_mat_list,y_tag_list = get_xy()
-# # shuffle x y
-# zip_list = list(zip(x_mat_list, y_tag_list))
-# random.shuffle(zip_list)
-# x_mat_list[:], y_tag_list[:] = zip(*zip_list)
-#
-# with tf.Session() as sess:
-#     sess.run(init)
-#     step = 0
-#     while step * batch_size < training_iters:
-#         # batch_xs, batch_ys = mnist.train.next_batch(batch_size)
-#         start = random.randint(0, x_mat_list.shape[0]-batch_size)
-#         batch_xs, batch_ys= x_mat_list[start:start+batch_size], y_tag_list[start:start+batch_size]
-#         batch_ys = np.reshape(batch_ys, [-1, n_classes])
-#         # batch_xs = batch_xs.reshape([batch_size, n_steps, n_inputs])
-#         sess.run([train_op],feed_dict={
-#             x: batch_xs,
-#             y: batch_ys,
-#         })
-#         if step % 20 == 0:
-#             print(sess.run(accuracy, feed_dict={
-#                 x: batch_xs,
-#                 y: batch_ys
-#             }))
-#         step += 1
+pred = RNN(x, weights, biases)
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=y))
+train_op = tf.train.AdamOptimizer(lr).minimize(cost)
+
+correct_pred = tf.equal(tf.argmax(pred,1),tf.argmax(y,1))
+accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
+
+init = tf.global_variables_initializer()
+x_mat_list,y_tag_list = get_xy()
+# shuffle x y
+zip_list = list(zip(x_mat_list, y_tag_list))
+random.shuffle(zip_list)
+x_mat_list[:], y_tag_list[:] = zip(*zip_list)
+
+with tf.Session() as sess:
+    sess.run(init)
+    step = 0
+    while step * batch_size < training_iters:
+        # batch_xs, batch_ys = mnist.train.next_batch(batch_size)
+        start = random.randint(0, x_mat_list.shape[0]-batch_size)
+        batch_xs, batch_ys= x_mat_list[start:start+batch_size], y_tag_list[start:start+batch_size]
+        batch_ys = np.reshape(batch_ys, [-1, n_classes])
+        # batch_xs = tf.nn.embedding_lookup(embedding, batch_xs)
+
+        # batch_xs = batch_xs.reshape([batch_size, n_steps, n_inputs])
+        sess.run([train_op],feed_dict={
+            x: batch_xs,
+            y: batch_ys,
+        })
+        if step % 20 == 0:
+            print(sess.run(accuracy, feed_dict={
+                x: batch_xs,
+                y: batch_ys
+            }))
+        step += 1
 
 

@@ -5,32 +5,40 @@
 # @Author      : Zoe
 # @File        : temp.py
 # @Description :
-import json
 
-f = open('/Users/zoe/Documents/event_extraction/majorEventDump/majorEventDump.json','r')
-a = f.read()
-f.close()
+import  matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
 
-f = open('/Users/zoe/Documents/event_extraction/majorEventDump/typeCodeDump.json','r')
-b = f.read()
-f.close()
 
-j = json.loads(a)
-j2 = json.loads(b)
+def draw():
+    x = [i for i in range(0, 70)]
+    mp = []
+    ap = []
+    for i in x:
+        mp.append(120000*i-3000*(i * i))
+        ap.append(60000*i-1000*i*i)
+    plt.plot(x, mp, label='mp')
+    plt.plot(x, ap, label='ap')
+    max_ap = max(ap)
+    max_index = ap.index(max_ap)
+    plt.plot(max_index, max_ap, 'm*')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
 
-# {'S_INFO_WINDCODE': '000418.SZ', 'S_EVENT_HAPDATE': '20140815', 'S_EVENT_EXPDATE': '20140815', 'S_EVENT_CATEGORYCODE': '204008001'}
+draw()
 
-dic = list()
-for one in j:
-    if one['S_INFO_WINDCODE'] == '000418.SZ':
-        d = dict()
-        d['S_INFO_WINDCODE'] = one['S_INFO_WINDCODE']
-        d['S_EVENT_HAPDATE'] = one['S_EVENT_HAPDATE']
-        d['S_EVENT_EXPDATE'] = one['S_EVENT_EXPDATE']
-        d['S_EVENT'] = j2[one['S_EVENT_CATEGORYCODE']]
-        dic.append(d)
+def draw2():
+    fig = plt.figure()
+    ax = Axes3D(fig)
 
-f = open('event.txt', 'w')
-for one in dic:
-    f.write(json.dumps(one,ensure_ascii=False)+'\n')
-f.close()
+    X = np.arange(0, 400, 1)
+    Y = np.arange(0, 400, 1)
+    X, Y = np.meshgrid(X, Y)
+    Z = 1200* (X ** 2)*Y - 3* (X**3)* (Y**2)
+
+    ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='rainbow')
+    plt.show()
+
+# draw2()
