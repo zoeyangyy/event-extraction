@@ -2,3 +2,5 @@
 /tf_test/my_net/
 /tf_test/logs/
 /raw_file/
+/ckpt/
+/LSTM/

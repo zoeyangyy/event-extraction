@@ -27,7 +27,7 @@ def draw():
     plt.grid(True)
     plt.show()
 
-draw()
+# draw()
 
 def draw2():
     fig = plt.figure()

@@ -46,7 +46,7 @@ def bias_variable(shape):
 X_inputs = tf.placeholder(tf.int32, [None, timestep_size], name='X_input')
 y_inputs = tf.placeholder(tf.int32, [None, timestep_size], name='y_input')
 
-model = gensim.models.Word2Vec.load("raw_file/text100.model")
+model = gensim.models.Word2Vec.load("../raw_file/text100.model")
 
 def bi_lstm(X_inputs):
     """build the bi-LSTMs network. Return the y_pred"""

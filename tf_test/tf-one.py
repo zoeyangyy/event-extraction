@@ -6,14 +6,14 @@
 # @File        : tf-one.py
 # @Description : tf test
 
-# import tensorflow as tf
-# from tensorflow.examples.tutorials.mnist import input_data
+import tensorflow as tf
+from tensorflow.examples.tutorials.mnist import input_data
 import numpy as np
-# import matplotlib.pyplot as plt
-# import os
-# from sklearn.datasets import load_digits
-# from sklearn.model_selection import train_test_split
-# from sklearn.preprocessing import LabelBinarizer
+import matplotlib.pyplot as plt
+import os
+from sklearn.datasets import load_digits
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelBinarizer
 
 
 def test1():
@@ -140,6 +140,7 @@ def test5():
                 plt.pause(0.3)
         writer.close()
 
+test5()
 
 def test6():
     def compute_accuracy(v_xs, v_ys):
@@ -280,11 +281,3 @@ def test11_npshape():
     y[0] = y_tag.index('O')
     print(y)
 
-import random
-a = [[[1,2],[3,4]],[[5,6],[7,8]]]
-b = [[['a','b'],['c','d']],[['e','f'],['g','h']]]
-c = list(zip(a, b))
-random.shuffle(c)
-a[:], b[:] = zip(*c)
-print(a)
-print(b)
