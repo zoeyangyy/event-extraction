@@ -1,0 +1,61 @@
+baseline(event):
+***TESTING RESULT***EPOCH=1
+testing instance = 239095, total cost = 1.51447, testing accuracy = 0.573659
+***TESTING RESULT***EPOCH=2
+testing instance = 239095, total cost = 1.42204, testing accuracy = 0.589987
+***TESTING RESULT***EPOCH=3
+testing instance = 239095, total cost = 1.41317, testing accuracy = 0.590476
+***TESTING RESULT***EPOCH=4
+testing instance = 239095, total cost = 1.44176, testing accuracy = 0.578782
+***TESTING RESULT***EPOCH=5
+testing instance = 239095, total cost = 1.47719, testing accuracy = 0.57905
+8
+
+position:
+***TESTING RESULT***EPOCH=1
+testing instance = 239095, total cost = 1.53936, testing accuracy = 0.559008
+***TESTING RESULT***EPOCH=2
+testing instance = 239095, total cost = 1.43267, testing accuracy = 0.58593
+***TESTING RESULT***EPOCH=3
+testing instance = 239095, total cost = 1.41624, testing accuracy = 0.591706
+***TESTING RESULT***EPOCH=4
+testing instance = 239095, total cost = 1.42335, testing accuracy = 0.590526
+***TESTING RESULT***EPOCH=5
+testing instance = 239095, total cost = 1.42578, testing accuracy = 0.590573
+
+all:
+***TESTING RESULT***EPOCH=1
+testing instance = 239095, total cost = 3056, testing accuracy = 0.552007
+***TESTING RESULT***EPOCH=2
+testing instance = 239095, total cost = 2698.93, testing accuracy = 0.59035
+***TESTING RESULT***EPOCH=3
+testing instance = 239095, total cost = 2633.99, testing accuracy = 0.591128
+***TESTING RESULT***EPOCH=4
+testing instance = 239095, total cost = 2664.18, testing accuracy = 0.587372
+***TESTING RESULT***EPOCH=5
+testing instance = 239095, total cost = 2676.92, testing accuracy = 0.592395
+
+time:
+***TESTING RESULT***EPOCH=1
+testing instance = 239095, total cost = 1.61186, testing accuracy = 0.552299
+***TESTING RESULT***EPOCH=2
+testing instance = 239095, total cost = 2.9548, testing accuracy = 0.508444
+***TESTING RESULT***EPOCH=3
+testing instance = 239095, total cost = 3.85978, testing accuracy = 0.490502
+***TESTING RESULT***EPOCH=4
+testing instance = 239095, total cost = 4.59514, testing accuracy = 0.48826
+***TESTING RESULT***EPOCH=5
+testing instance = 239095, total cost = 5.377, testing accuracy = 0.478486
+
+self:
+***TESTING RESULT***EPOCH=1
+testing instance = 239095, total cost = 2.5369, testing accuracy = 0.0272559
+***TESTING RESULT***EPOCH=2
+testing instance = 239095, total cost = 2.30006, testing accuracy = 0.199495
+***TESTING RESULT***EPOCH=3
+testing instance = 239095, total cost = 2.31411, testing accuracy = 0.199624
+***TESTING RESULT***EPOCH=4
+testing instance = 239095, total cost = 2.32425, testing accuracy = 0.199512
+***TESTING RESULT***EPOCH=5
+testing instance = 239095, total cost = 2.35548, testing accuracy = 0.199754
+

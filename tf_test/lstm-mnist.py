@@ -7,6 +7,7 @@ from tensorflow.contrib import rnn
 from tensorflow.examples.tutorials.mnist import input_data
 import matplotlib.pyplot as plt
 
+
 # 设置 GPU 按需增长
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
@@ -88,6 +89,7 @@ h_state = outputs[-1]
 # 首先定义 softmax 的连接权重矩阵和偏置
 # out_W = tf.placeholder(tf.float32, [hidden_size, class_num], name='out_Weights')
 # out_bias = tf.placeholder(tf.float32, [class_num], name='out_bias')
+
 # 开始训练和测试
 W = tf.Variable(tf.truncated_normal([hidden_size, class_num], stddev=0.1), dtype=tf.float32)
 bias = tf.Variable(tf.constant(0.1,shape=[class_num]), dtype=tf.float32)

@@ -31,3 +31,4 @@ testing instance = 239095, total cost = 3.65293, testing accuracy = 0.511675
 testing instance = 239095, total cost = 4.4484, testing accuracy = 0.504942
 ***TESTING RESULT***EPOCH=5
 testing instance = 239095, total cost = 5.18998, testing accuracy = 0.494966
+
