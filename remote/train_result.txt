@@ -1,0 +1,150 @@
+
+baseline     2018-03-02 11:42:51:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.37255, training accuracy = 0.577396
+***TRAINING RESULT***EPOCH=2
+training instance = 100000, total cost = 1.14999, training accuracy = 0.632143
+***TRAINING RESULT***EPOCH=3
+training instance = 100000, total cost = 0.816141, training accuracy = 0.734415
+***TRAINING RESULT***EPOCH=4
+training instance = 100000, total cost = 0.580933, training accuracy = 0.797454
+***TRAINING RESULT***EPOCH=5
+training instance = 100000, total cost = 0.470239, training accuracy = 0.827546
+
+baseline     2018-03-02 12:03:39:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.48431, training accuracy = 0.564888
+***TRAINING RESULT***EPOCH=2
+training instance = 100000, total cost = 0.513536, training accuracy = 0.808844
+***TRAINING RESULT***EPOCH=3
+training instance = 100000, total cost = 0.394264, training accuracy = 0.848326
+***TRAINING RESULT***EPOCH=4
+training instance = 100000, total cost = 0.339112, training accuracy = 0.873741
+***TRAINING RESULT***EPOCH=5
+training instance = 100000, total cost = 0.2931, training accuracy = 0.888018
+
+baseline  mlp classifier   2018-03-03 11:17:49:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.50897, training accuracy = 0.55244
+***TRAINING RESULT***EPOCH=2
+training instance = 100000, total cost = 0.498097, training accuracy = 0.814878
+***TRAINING RESULT***EPOCH=3
+training instance = 100000, total cost = 0.374334, training accuracy = 0.853481
+***TRAINING RESULT***EPOCH=4
+training instance = 100000, total cost = 0.298041, training accuracy = 0.882063
+***TRAINING RESULT***EPOCH=5
+training instance = 100000, total cost = 0.237838, training accuracy = 0.90599
+
+baseline    2018-03-03 12:50:15:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 2.23491, training accuracy = 0.221967
+***TRAINING RESULT***EPOCH=2
+training instance = 100000, total cost = 2.0215, training accuracy = 0.300711
+***TRAINING RESULT***EPOCH=3
+training instance = 100000, total cost = 1.99242, training accuracy = 0.307115
+***TRAINING RESULT***EPOCH=4
+training instance = 100000, total cost = 1.99662, training accuracy = 0.301461
+
+event  mlp classifier  2018-03-03 11:36:13:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.5432, training accuracy = 0.54209
+***TRAINING RESULT***EPOCH=2
+training instance = 100000, total cost = 0.478434, training accuracy = 0.825607
+***TRAINING RESULT***EPOCH=3
+training instance = 100000, total cost = 0.35615, training accuracy = 0.863921
+***TRAINING RESULT***EPOCH=4
+training instance = 100000, total cost = 0.285883, training accuracy = 0.893033
+***TRAINING RESULT***EPOCH=5
+training instance = 100000, total cost = 0.260886, training accuracy = 0.902963
+
+baseline__gcn____2018-03-03 13:12:19:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 2.57584, training accuracy = 0.0184123
+***TRAINING RESULT***EPOCH=2
+training instance = 100000, total cost = 2.02816, training accuracy = 0.285286
+
+baseline__mlp____2018-03-03 13:27:05:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.5154, training accuracy = 0.557465
+***TRAINING RESULT***EPOCH=2
+training instance = 100000, total cost = 0.47559, training accuracy = 0.823869
+***TRAINING RESULT***EPOCH=3
+training instance = 100000, total cost = 0.336328, training accuracy = 0.868286
+***TRAINING RESULT***EPOCH=4
+training instance = 100000, total cost = 0.290235, training accuracy = 0.887438
+***TRAINING RESULT***EPOCH=5
+training instance = 100000, total cost = 0.275492, training accuracy = 0.8849
+
+time__mlp____2018-03-03 13:44:03:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 2.0329, training accuracy = 0.299383
+***TRAINING RESULT***EPOCH=2
+training instance = 100000, total cost = 1.65698, training accuracy = 0.41624
+***TRAINING RESULT***EPOCH=3
+training instance = 100000, total cost = 1.25075, training accuracy = 0.618087
+***TRAINING RESULT***EPOCH=4
+training instance = 100000, total cost = 1.11416, training accuracy = 0.686681
+***TRAINING RESULT***EPOCH=5
+training instance = 100000, total cost = 1.04051, training accuracy = 0.778702
+
+baseline__mlp____2018-03-03 15:33:31:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.52766, training accuracy = 0.56244
+***TRAINING RESULT***EPOCH=2
+training instance = 100000, total cost = 0.469677, training accuracy = 0.824498
+***TRAINING RESULT***EPOCH=3
+training instance = 100000, total cost = 0.391698, training accuracy = 0.852132
+***TRAINING RESULT***EPOCH=4
+training instance = 100000, total cost = 0.340409, training accuracy = 0.872712
+***TRAINING RESULT***EPOCH=5
+training instance = 100000, total cost = 0.309112, training accuracy = 0.883542
+
+baseline__gcn____2018-03-03 14:26:16:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 2.4084, training accuracy = 0.190707
+***TRAINING RESULT***EPOCH=2
+training instance = 100000, total cost = 2.07285, training accuracy = 0.301401
+***TRAINING RESULT***EPOCH=3
+training instance = 100000, total cost = 2.0725, training accuracy = 0.294747
+***TRAINING RESULT***EPOCH=4
+training instance = 100000, total cost = 2.09366, training accuracy = 0.290281
+***TRAINING RESULT***EPOCH=5
+training instance = 100000, total cost = 2.06464, training accuracy = 0.296875
+
+time__mlp____2018-03-03 15:50:04:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 2.12324, training accuracy = 0.215653
+***TRAINING RESULT***EPOCH=2
+training instance = 100000, total cost = 1.26412, training accuracy = 0.627178
+***TRAINING RESULT***EPOCH=3
+training instance = 100000, total cost = 0.843538, training accuracy = 0.78074
+***TRAINING RESULT***EPOCH=4
+training instance = 100000, total cost = 0.703161, training accuracy = 0.815197
+***TRAINING RESULT***EPOCH=5
+training instance = 100000, total cost = 0.563999, training accuracy = 0.840923
+
+position__mlp____2018-03-03 20:14:31:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.65755, training accuracy = 0.512388
+***TRAINING RESULT***EPOCH=2
+training instance = 100000, total cost = 0.667303, training accuracy = 0.78081
+***TRAINING RESULT***EPOCH=3
+training instance = 100000, total cost = 0.427279, training accuracy = 0.849255
+***TRAINING RESULT***EPOCH=4
+training instance = 100000, total cost = 0.34653, training accuracy = 0.879815
+***TRAINING RESULT***EPOCH=5
+training instance = 100000, total cost = 0.311819, training accuracy = 0.890745
+
+baseline__gcn____2018-03-03 20:48:55:
+
+event__mlp____2018-03-03 20:36:34:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.55933, training accuracy = 0.554857
+***TRAINING RESULT***EPOCH=2
+training instance = 100000, total cost = 0.500215, training accuracy = 0.82332
+***TRAINING RESULT***EPOCH=3
+training instance = 100000, total cost = 0.39935, training accuracy = 0.852472
+***TRAINING RESULT***EPOCH=4
+training instance = 100000, total cost = 0.336654, training accuracy = 0.880275
+***TRAINING RESULT***EPOCH=5
+training instance = 100000, total cost = 0.29743, training accuracy = 0.88523

@@ -20,15 +20,27 @@ import numpy as np
 import tensorflow as tf
 import random
 import matplotlib.pyplot as plt
-import os
-trainType = 'all_dev'
-model_save_path = 'ckpt/'+trainType+'.ckpt'
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+import os,sys,getopt
+
+# dev或test数据集
+opts, args = getopt.getopt(sys.argv[1:], "t:n:c:", ["type=","note=","cf="])
+trainType = 'event'
+note = ''
+classifier = 'mlp'
+for op, value in opts:
+    if op == "--type":
+        trainType = value
+    if op == '--note':
+        note = value
+    if op == '--cf':
+        classifier = value
+
+model_save_path = '../data/ckpt/'+trainType+classifier+'.ckpt'
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2"
 
 config = tf.ConfigProto(log_device_placement=True, allow_soft_placement=True)
 config.gpu_options.per_process_gpu_memory_fraction = 0.9 # 占用GPU90%的显存
 config.gpu_options.allow_growth = True
-
 
 def extract_one_company():
     f = open('/Users/zoe/Documents/event_extraction/majorEventDump/majorEventDump.json','r')
@@ -220,8 +232,6 @@ def plot():
 
 # plot()
 
-Chain_Lens = 5
-Category = dict()
 
 def get_xy():
     global Category
@@ -370,18 +380,18 @@ def get_xy_new():
 
 # x_mat_list, y_tag_list, x_test, y_test = get_xy_new()
 
-f_data = open('../data/pickle.data.dev', 'rb')
+f_data = open('../data/pickle.data.train', 'rb')
 x_mat_list = pickle.load(f_data)
 y_tag_list = pickle.load(f_data)
 f_data.close()
 
 print('***DATA SHAPE***\n', x_mat_list.shape, y_tag_list.shape)
 
-# # 生成Category.json文件。换成pickle data后，直接载入之前生成的Category.json。
-# with open('../data/Category.json', 'w', encoding='utf-8') as outputFile:
-#     json.dump(Category, outputFile, indent=1)
-with open('../data/Category.json','r') as inputFile:
-    Category = json.load(inputFile)
+# # # 生成Category.json文件。换成pickle data后，直接载入之前生成的Category.json。
+# # with open('../data/Category.json', 'w', encoding='utf-8') as outputFile:
+# #     json.dump(Category, outputFile, indent=1)
+# with open('../data/Category.json','r') as inputFile:
+#     Category = json.load(inputFile)
 
 # shuffle x y
 def shuffle_xy(x_mat_list, y_tag_list):
@@ -393,59 +403,70 @@ def shuffle_xy(x_mat_list, y_tag_list):
 
 lr = 0.001
 # 需要改大
-epoch = 10
+epoch = 5
 _batch_size = 128
 training_iters = x_mat_list.shape[0]/_batch_size
-vocab_size = len(Category)    # 样本中事件类型个数，根据处理数据的时候得到
+vocab_size = 25    # 样本中事件类型个数，根据处理数据的时候得到
 embedding_size = 20
 trainNum = 100000
+Chain_Lens = 5
 
 n_steps = Chain_Lens # 链条长度
 n_hidden_units = 128 # 神经元数目
-n_classes = len(Category)
+n_classes = 25
 
 x = tf.placeholder(tf.int32, [None, n_steps*2])
 y = tf.placeholder(tf.int32, [None, n_classes])
 output_kp = tf.placeholder(tf.float32, [])
 
+# TODO 看一下参数的训练过程
 weights = {
-    # （Chain_Lens，128）
-    'in': tf.Variable(tf.random_normal([n_steps,n_hidden_units])),
-    # （128，len(Category）
-    'out': tf.Variable(tf.random_normal([n_hidden_units, n_classes]))
+    # （feature_dim，128）
+    'baseline': tf.Variable(tf.random_normal([n_hidden_units * 2, n_hidden_units])),
+    'position': tf.Variable(tf.random_normal([n_hidden_units * 3, n_hidden_units])),
+    'time': tf.Variable(tf.random_normal([n_hidden_units * 3, n_hidden_units])),
+    'event': tf.Variable(tf.random_normal([n_hidden_units * 3, n_hidden_units])),
+
+    'baseline_gcn': tf.Variable(tf.random_normal([n_hidden_units * 2+embedding_size, n_hidden_units])),
+    # （128，n_classes）
+    'out': tf.Variable(tf.random_normal([n_hidden_units, n_classes])),
+    'out_gcn': tf.Variable(tf.random_normal([n_hidden_units, 1]))
 }
 biases = {
-    'in': tf.Variable(tf.constant(0.1, shape=[n_hidden_units])),
+    'baseline': tf.Variable(tf.constant(0.1, shape=[n_hidden_units])),
+    'position': tf.Variable(tf.constant(0.1, shape=[n_hidden_units])),
+    'time': tf.Variable(tf.constant(0.1, shape=[n_hidden_units])),
+    'event': tf.Variable(tf.constant(0.1, shape=[n_hidden_units])),
+    # （n_classes）
     'out': tf.Variable(tf.constant(0.1, shape=[n_classes])),
-    'alpha': tf.Variable(tf.constant(0.1, shape=[n_classes])),
-    'beta': tf.Variable(tf.constant(0.1, shape=[n_classes])),
-    'event': tf.Variable(tf.constant(0.1, shape=[n_classes])),
 }
-alpha = {
-    1: tf.Variable(tf.random_normal([n_hidden_units, n_classes])),
-    2: tf.Variable(tf.random_normal([n_hidden_units, n_classes])),
-    3: tf.Variable(tf.random_normal([n_hidden_units, n_classes])),
-    4: tf.Variable(tf.random_normal([n_hidden_units, n_classes]))
+
+time_v = {
+    1: tf.Variable(tf.random_normal([n_hidden_units, n_hidden_units])),
+    2: tf.Variable(tf.random_normal([n_hidden_units, n_hidden_units])),
+    3: tf.Variable(tf.random_normal([n_hidden_units, n_hidden_units])),
+    4: tf.Variable(tf.random_normal([n_hidden_units, n_hidden_units]))
 }
-beta = {
-    0: tf.Variable(tf.random_normal([n_hidden_units, n_classes])),
-    1: tf.Variable(tf.random_normal([n_hidden_units, n_classes])),
-    2: tf.Variable(tf.random_normal([n_hidden_units, n_classes])),
-    3: tf.Variable(tf.random_normal([n_hidden_units, n_classes])),
-    4: tf.Variable(tf.random_normal([n_hidden_units, n_classes]))
+position = {
+    0: tf.Variable(tf.random_normal([n_hidden_units, n_hidden_units])),
+    1: tf.Variable(tf.random_normal([n_hidden_units, n_hidden_units])),
+    2: tf.Variable(tf.random_normal([n_hidden_units, n_hidden_units])),
+    3: tf.Variable(tf.random_normal([n_hidden_units, n_hidden_units])),
+    4: tf.Variable(tf.random_normal([n_hidden_units, n_hidden_units]))
 }
 
 event = list()
 for i in range(n_classes):
     event_sub = list()
     for j in range(n_classes):
-        event_sub.append(tf.Variable(tf.random_normal([n_hidden_units, n_classes])))
+        event_sub.append(tf.Variable(tf.random_normal([n_hidden_units, n_hidden_units])))
     event.append(event_sub)
 
 
 batchNum = 0
 batch_xs = np.ones(shape=(_batch_size, Chain_Lens*2)).astype(int)
 batch_ys = np.ones(shape=(_batch_size, Chain_Lens*2)).astype(int)
+
 
 def next_batch():
     global batchNum, x_mat_list, y_tag_list
@@ -458,12 +479,30 @@ def next_batch():
     return batch_x, batch_y
 
 
-def LSTM(X, weights, biases, beta):
+# TODO 特征维度 concat instead of add     128 or else?
+def LSTM(X, weights, biases, time_v, position, event):
     # hidden layer for input to cell
 
     embedding = tf.get_variable("embedding", [vocab_size, embedding_size], dtype=tf.float32)
     X_in = tf.nn.embedding_lookup(embedding, X[:, :Chain_Lens])
     # => (64 batch, 128 hidden)
+
+    # TODO labeling embedding 用上01矩阵
+    # label embedding
+    label_embedding = tf.nn.embedding_lookup(embedding, [i for i in range(n_classes)])
+
+    adjacency_mat = pickle.load(open('../data/adjacency.regular', 'rb'))
+    hidden_label_em = tf.constant([0.1])
+
+    for i in range(label_embedding.shape[0]):
+        q = tf.constant(0.1, shape=[embedding_size])
+        for j in range(label_embedding.shape[0]):
+            q = tf.add(q, label_embedding[j]*adjacency_mat[i][j])
+            q = tf.add(q, label_embedding[j]*adjacency_mat[j][i])
+        hidden_label_em = tf.concat([hidden_label_em, q], 0)
+    hidden_label_em = tf.reshape(hidden_label_em[1:],[n_classes, embedding_size])
+
+    # label embedding
 
     # cell
     fw_lstm_cell = tf.nn.rnn_cell.BasicLSTMCell(n_hidden_units, forget_bias=1.0, state_is_tuple=True)
@@ -478,68 +517,83 @@ def LSTM(X, weights, biases, beta):
             initial_state_fw=fw_init_state, initial_state_bw=bw_init_state, time_major=False)
     # outputs, states = tf.nn.dynamic_rnn(fw_lstm_cell, X_in, initial_state=fw_init_state, time_major=False)
 
+    # ********LSTM*******
     outputs = tf.add(outputs[0], outputs[1])
-    results = tf.constant(0.1)
-    # ********LSTM*******
-    results = tf.add(results, tf.matmul(tf.add(states[0][1], states[1][1]), weights['out']) + biases['out'])
+    tf_results = tf.concat([states[0][1], states[1][1]], 1)
     # ********LSTM*******
 
-    # ********position attention*******
-    # outputs = tf.add(outputs[0], outputs[1])
-    # results = tf.constant(0.1)
+    if trainType == 'position' or trainType == 'all':
+        # ********position attention*******
+        tf_position = tf.constant(0.1)
+        for i in range(Chain_Lens):
+            # batch_number * Chain_Lens * n_hidden_units  =>  按某i个Chain_Lens取数据
+            result_beta = tf.reshape(tf.slice(outputs, [0, i, 0], [-1, 1, -1]), [-1, n_hidden_units])
+            result_beta = tf.matmul(result_beta, position[i])
+            tf_position = tf.add(tf_position, result_beta)
+        # ********position attention*******
+        tf_results = tf.concat([tf_results, tf_position], 1)
 
-    for i in range(5):
-        # batch_number * Chain_Lens * n_hidden_units  =>  按某i个Chain_Lens取数据
-        result_beta = tf.reshape(tf.slice(outputs, [0, i, 0], [-1, 1, -1]), [-1, n_hidden_units])
-        result_beta = tf.matmul(result_beta, beta[i]) + biases['beta']
-        results = tf.add(results, result_beta)
-    # ********position attention*******
+    if trainType == 'time' or trainType == 'all':
+        # ********time attention*******
+        tf_time = tf.constant(0.1)
+        for i in range(Chain_Lens):
+            # batch_number * Chain_Lens * n_hidden_units  =>  按某i个Chain_Lens取数据
+            result_alpha = tf.reshape(tf.slice(outputs, [0, i, 0], [-1, 1, -1]), [-1, n_hidden_units])
+            result_sub = tf.constant(0.1, shape=[n_hidden_units])
+            for index in range(_batch_size):
+                reshape_r_a = tf.reshape(result_alpha[index], [1, -1])
+                result_sub = tf.concat([result_sub, tf.squeeze(tf.matmul(reshape_r_a, time_v[batch_xs[index][i+5]]))], 0)
+            # batch_number * n_hidden_units
+            result_sub = tf.reshape(result_sub[n_hidden_units:], [_batch_size, n_hidden_units])
+            tf_time = tf.add(tf_time, result_sub)
+        # ********time attention*******
+        tf_results = tf.concat([tf_results, tf_time], 1)
 
-    # ********time attention*******
-    # outputs = tf.add(outputs[0], outputs[1])
-    # results = tf.constant(0.1)
+    # TODO self-attention 只考虑前面的事件
+    if trainType == 'event' or trainType == 'all':
+        # ********event attention*******
+        tf_event = tf.constant(0.1)
+        for i in range(Chain_Lens):
+            # batch_number * Chain_Lens * n_hidden_units  =>  按某i个Chain_Lens取数据
+            result_event = tf.reshape(tf.slice(outputs, [0, i, 0], [-1, 1, -1]), [-1, n_hidden_units])
+            result_sub = tf.constant(0.1, shape=[n_hidden_units])
+            for index in range(_batch_size):
+                reshape_e = tf.reshape(result_event[index], [1, -1])
+                event_sum = tf.constant(0.1, shape=[n_hidden_units, n_hidden_units])
+                for j in range(i):
+                    tf.add(event_sum, event[batch_xs[index][i]][batch_xs[index][j]])
+                result_sub = tf.concat([result_sub, tf.squeeze(tf.matmul(reshape_e, event_sum))],0)
+            # batch_number * n_hidden_units
+            result_sub = tf.reshape(result_sub[n_hidden_units:], [_batch_size, n_hidden_units])
+            tf_event = tf.add(tf_event, result_sub)
+        # ********event attention*******
+        tf_results = tf.concat([tf_results, tf_event], 1)
 
-    for i in range(Chain_Lens):
-        # batch_number * Chain_Lens * n_hidden_units  =>  按某i个Chain_Lens取数据
-        result_alpha = tf.reshape(tf.slice(outputs, [0, i, 0], [-1, 1, -1]), [-1, n_hidden_units])
-        result_sub = tf.constant(0.1, shape=[n_classes])
-        for index in range(_batch_size):
-            reshape_r_a = tf.reshape(result_alpha[index], [1, -1])
-            # 问题：由于X_batch[index]的真实数据拿不到，得不到alpha[]的值
-            result_sub = tf.concat([result_sub, tf.squeeze(tf.matmul(reshape_r_a, alpha[batch_xs[index][i+5]]) + biases['alpha'])], 0)
-        # batch_number * n_classes
-        result_sub = tf.reshape(result_sub[n_classes:], [_batch_size, n_classes])
-        results = tf.add(results, result_sub)
-    # ********time attention*******
+    if classifier == 'mlp':
+        # mlp classifer
+        mlp_l1 = tf.matmul(tf_results, weights[trainType]) + biases[trainType]
+        mlp_l2 = tf.nn.relu(mlp_l1)
+        results = tf.matmul(mlp_l2, weights['out']) + biases['out']
+        # mlp classifer
 
-    # ********event attention*******
-    # outputs = tf.add(outputs[0], outputs[1])
-    # results = tf.constant(0.1)
+    # TODO 最后的GCN MLP部分
+    if classifier == 'gcn':
+        # gcn classifier
+        tf_sequence = tf.tile(tf_results, [n_classes, 1])
+        tf_label = tf.tile(hidden_label_em, [_batch_size, 1])
+        tf_concat = tf.reshape(tf.concat([tf_sequence, tf_label], 1), [_batch_size * n_classes, -1])
+        gcn_l1 = tf.reshape(tf.matmul(tf_concat, weights[trainType+'_gcn']),
+                            [_batch_size, n_classes, -1])+biases[trainType]
+        gcn_l2 = tf.nn.relu(gcn_l1)
+        results = tf.reshape(tf.matmul(tf.reshape(gcn_l2, [_batch_size*n_classes,-1]), weights['out_gcn']),
+                             [_batch_size, n_classes]) + biases['out']
 
-    assist_list = [0, 1, 2, 3, 4]
-    for i in range(Chain_Lens):
-        # batch_number * Chain_Lens * n_hidden_units  =>  按某i个Chain_Lens取数据
-        result_event = tf.reshape(tf.slice(outputs, [0, i, 0], [-1, 1, -1]), [-1, n_hidden_units])
-        result_sub = tf.constant(0.1, shape=[n_classes])
-        for index in range(_batch_size):
-            reshape_e = tf.reshape(result_event[index], [1, -1])
-            assist_list.remove(i)
-            event_sum = tf.constant(0.1, shape=[n_hidden_units, n_classes])
-            for j in assist_list:
-                tf.add(event_sum, event[batch_xs[index][i]][batch_xs[index][j]])
-            result_sub = tf.concat(
-                [result_sub, tf.squeeze(tf.matmul(reshape_e, event_sum) + biases['event'])],
-                0)
-            assist_list.append(i)
-        # batch_number * n_classes
-        result_sub = tf.reshape(result_sub[n_classes:], [_batch_size, n_classes])
-        results = tf.add(results, result_sub)
-    # ********event attention*******
+        # gcn classifier
 
     return results
 
 
-pred = LSTM(x, weights, biases, beta)
+pred = LSTM(x, weights, biases, time_v, position, event)
 cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=y))
 # 预测结果
 pred_y = tf.cast(tf.argmax(pred, 1), tf.int32)
@@ -572,8 +626,9 @@ with tf.Session(config=config) as sess:
     sess.run(init)
     epoch_i = 0
     print('***TRAINING PROCESS***')
-    with open('../data/train_result_dev.txt', 'a') as file:
-        file.write('\n'+trainType+'   '+time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+':\n')
+    with open('train_result.txt', 'a') as file:
+        # file.write('{}__{}__{}__{}:\n'.format(trainType, classifier, note,
+        #                                       time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
         while epoch_i < epoch:
             step = 0
             while step < training_iters:
@@ -596,7 +651,7 @@ with tf.Session(config=config) as sess:
             saver.save(sess, model_save_path, global_step=epoch_i)
             epoch_i += 1
             # testing
-            print ('***TRAINING RESULT***EPOCH=',epoch_i)
+            print ('***TRAINING RESULT***EPOCH=', epoch_i)
             x_mat_list, y_tag_list = shuffle_xy(x_mat_list, y_tag_list)
             x_mat_list = x_mat_list[0:trainNum]
             y_tag_list = y_tag_list[0:trainNum]
@@ -610,7 +665,7 @@ with tf.Session(config=config) as sess:
                 step += 1
             test_accuracy /= step
             test_cost /= step
-            print ("traing instance = %d, total cost = %g, training accuracy = %g" % (trainNum, test_cost, test_accuracy))
-            file.write('***TRAINING RESULT***EPOCH='+str(epoch_i)+'\n')
-            file.write("traing instance = %d, total cost = %g, training accuracy = %g" %
-                       (trainNum, test_cost, test_accuracy)+'\n')
+            print ("training instance = %d, total cost = %g, training accuracy = %g" % (trainNum, test_cost, test_accuracy))
+            # file.write('***TRAINING RESULT***EPOCH='+str(epoch_i)+'\n')
+            # file.write("training instance = %d, total cost = %g, training accuracy = %g" %
+            #            (trainNum, test_cost, test_accuracy)+'\n')
