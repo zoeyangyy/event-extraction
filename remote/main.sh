@@ -1,5 +1,3 @@
 #!/usr/bin/env bash
-python wande-event.py --type=position
-python wande-test.py --type=position
-python wande-event.py --type=event
-python wande-test.py --type=event
+python wande-event.py --type=baseline --cf=gcn
+python wande-test.py --type=baseline --cf=gcn

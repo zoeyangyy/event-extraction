@@ -13,6 +13,7 @@ import pylab
 from matplotlib.font_manager import FontManager, FontProperties
 import pandas as pd
 import numpy as np
+import nltk
 import random
 import re
 import os
@@ -142,6 +143,7 @@ def compareTrainTest():
 
     typeDict = dict()
     typeList = [t for t in typeClass.keys()]
+
     for t in typeClass.keys():
         for c in typeClass[t]:
             typeDict[c] = typeList.index(t)
@@ -150,8 +152,8 @@ def compareTrainTest():
     ### 获得按时间排序的公司事件链条
 
     # error = collections.defaultdict(int)
-    # countdict = collections.defaultdict(int)
-    # countdictTest = collections.defaultdict(int)
+    countdict = collections.defaultdict(int)
+    countdictTest = collections.defaultdict(int)
     dictTrain = collections.defaultdict(list)
     dictTest = collections.defaultdict(list)
     dictDev = collections.defaultdict(list)
@@ -164,21 +166,22 @@ def compareTrainTest():
                 new_event = dict()
                 new_event['date'] = s_event['date']
                 new_event['type'] = s_event['type']
-                if datetime.datetime.strptime(s_event['date'], '%Y%m%d') < datetime.datetime(2017, 1, 1):
+                if datetime.datetime.strptime(s_event['date'], '%Y%m%d') < datetime.datetime(2016, 1, 1):
                     # countdict[code2type[s_event['type']]] += 1
-                    # countdict[typeList[s_event['type']]] += 1
+                    # countdict[s_event['type']] += 1
                     dictTrain[company].append(new_event)
-                elif datetime.datetime(2017, 1, 1) <= datetime.datetime.strptime(s_event['date'], '%Y%m%d') < datetime.datetime(2017, 7, 1):
+                elif datetime.datetime(2016, 1, 1) <= datetime.datetime.strptime(s_event['date'], '%Y%m%d') < datetime.datetime(2017, 1, 1):
                     # countdict[code2type[s_event['type']]] += 1
-                    # countdict[typeList[s_event['type']]] += 1
+                    # countdict[s_event['type']] += 1
                     dictDev[company].append(new_event)
-                elif datetime.datetime.strptime(s_event['date'], '%Y%m%d') >= datetime.datetime(2017, 7, 1):
+                elif datetime.datetime.strptime(s_event['date'], '%Y%m%d') >= datetime.datetime(2017, 1, 1):
                     # countdictTest[code2type[s_event['type']]] += 1
-                    # countdictTest[typeList[s_event['type']]] += 1
+                    # countdictTest[s_event['type']] += 1
                     dictTest[company].append(new_event)
             except:
                 # error[code2type[s_event['type']]] += 1
                 print('error')
+
     with open('/Users/zoe/Documents/event_extraction/majorEventDump/TrainSet.json', 'w') as f_w:
         json.dump(dictTrain, f_w, indent=1)
     with open('/Users/zoe/Documents/event_extraction/majorEventDump/DevSet.json', 'w') as f_w:
@@ -189,19 +192,123 @@ def compareTrainTest():
     # print(error, len(error))
     # with open('temp.txt', 'w') as f_w:
     #     json.dump(error, f_w, ensure_ascii=False, indent=1)
-    #
+
     # countdict = sorted(countdict.items(), key=lambda d:d[1], reverse=True)
-    # countdict = {one[0]:one[1] for one in countdict}
+    # countdict = {typeList[one[0]]:one[1] for one in countdict}
+    # print(countdict)
     #
     # countdictTest = sorted(countdictTest.items(), key=lambda d:d[1], reverse=True)
-    # countdictTest = {one[0]:one[1] for one in countdictTest}
+    # countdictTest = {typeList[one[0]]:one[1] for one in countdictTest}
+    # print(countdictTest)
     #
-    # with open('/Users/zoe/Documents/event_extraction/majorEventDump/TrainClass_L.json', 'w') as f_w:
+    # with open('/Users/zoe/Documents/event_extraction/majorEventDump/TrainClass_all.json', 'w', encoding='utf8') as f_w:
     #     json.dump(countdict, f_w, ensure_ascii=False, indent=1)
-    # with open('/Users/zoe/Documents/event_extraction/majorEventDump/TestClass_L.json', 'w') as f_w:
+    #
+    # with open('/Users/zoe/Documents/event_extraction/majorEventDump/TestClass_L.json', 'w', encoding='utf8') as f_w:
     #     json.dump(countdictTest, f_w, ensure_ascii=False, indent=1)
 
 # compareTrainTest()
+
+# 6-gram results:
+# 107
+# 85882
+# 0.001245895531077525
+
+def language_model():
+    with open('/Users/zoe/Documents/event_extraction/majorEventDump/TrainSet.json', 'r',
+              encoding='utf-8') as inputFile:
+        eventsTrain = json.load(inputFile)
+    with open('/Users/zoe/Documents/event_extraction/majorEventDump/DevSet.json', 'r',
+              encoding='utf-8') as inputFile:
+        eventsDev = json.load(inputFile)
+    with open('/Users/zoe/Documents/event_extraction/majorEventDump/TestSet.json', 'r',
+              encoding='utf-8') as inputFile:
+        eventsTest = json.load(inputFile)
+
+    freqDist = collections.defaultdict(int)
+    pairFreqDist = collections.defaultdict(int)
+    trigramFreqDist = collections.defaultdict(int)
+
+    for company, eventSeq in eventsTrain.items():
+        for beginIdx, e in enumerate(eventSeq[:-1]):
+            # Start_Date = datetime.datetime.strptime(eventSeq[beginIdx-5]['date'], '%Y%m%d')
+            # freqDist[(eventSeq[beginIdx]['type'],eventSeq[beginIdx+1]['type'],eventSeq[beginIdx+2]['type'],
+            #           eventSeq[beginIdx+3]['type'],eventSeq[beginIdx+4]['type'],eventSeq[beginIdx+5]['type'])] +=1
+            freqDist[(eventSeq[beginIdx]['type'],eventSeq[beginIdx+1]['type'])] += 1
+
+    correct = 0
+    chains =  0
+    for company, eventSeq in eventsTest.items():
+        for beginIdx, e in enumerate(eventSeq[:-1]):
+            max = 0
+            chains += 1
+            for i in range(25):
+                count = freqDist[(eventSeq[beginIdx]['type'], i)]
+                if count > max:
+                    max = count
+                    pred = i
+            if i == eventSeq[beginIdx+1]['type']:
+                correct += 1
+    print(correct)
+    print(chains)
+    print(correct/chains)
+
+
+
+    # # save model    json key must be string
+    # freqDist = dict((':'.join([str(i) for i in k]), v) for k, v in freqDist.items())
+    # with open('/Users/zoe/Documents/event_extraction/majorEventDump/6gram.json', 'w', encoding='utf-8') as inputFile:
+    #     json.dump(freqDist, inputFile, indent=1)
+
+# language_model()
+
+
+def nltkBayes():
+    def gender_features(list):
+        return {'one': list[0]}
+    # , 'two': list[1], 'three': list[2], 'four': list[3], 'five': list[4]
+    with open('/Users/zoe/Documents/event_extraction/majorEventDump/TrainSet.json', 'r',
+              encoding='utf-8') as inputFile:
+        eventsTrain = json.load(inputFile)
+    with open('/Users/zoe/Documents/event_extraction/majorEventDump/TestSet.json', 'r',
+              encoding='utf-8') as inputFile:
+        eventsTest = json.load(inputFile)
+
+    mat_list = list()
+    mat = np.zeros(shape=(6))
+    for company, eventSeq in eventsTrain.items():
+        for beginIdx, e in enumerate(eventSeq[:-5]):
+            for i in range(6):
+                mat[i] = eventSeq[beginIdx+i]['type']
+            mat_list.append(mat)
+            mat = np.zeros(shape=(6))
+    labeled_data = ([(one[0:5], one[5]) for one in mat_list])
+    random.shuffle(labeled_data)
+
+
+    y_list = list()
+    mat = np.zeros(shape=(6))
+    for company, eventSeq in eventsTest.items():
+        for beginIdx, e in enumerate(eventSeq[:-5]):
+            for i in range(6):
+                mat[i] = eventSeq[beginIdx + i]['type']
+            y_list.append(mat)
+            mat = np.zeros(shape=(6))
+    labeled_y = ([(one[0:5], one[5]) for one in y_list])
+    random.shuffle(labeled_y)
+
+    train_set = [(gender_features(n), label) for (n, label) in labeled_data]
+    test_set = [(gender_features(n), label) for (n, label) in labeled_y]
+
+    classifier = nltk.NaiveBayesClassifier.train(train_set)
+
+    print(nltk.classify.accuracy(classifier, test_set))
+
+    print(classifier.show_most_informative_features(5))
+
+# 0.357839826739 只用一个事件
+# 0.511934980555
+# nltkBayes()
 
 
 def plt_class_distribution():
@@ -283,23 +390,6 @@ def plt_class_distribution():
     plt.savefig('/Users/zoe/Documents/event_extraction/第一次报告/Class_distribution.png')
 
 
-def a():
-    # 64*5*128
-    # 2*3*2
-    states = [[[0,0],[1,1],[2,2]],[[3,3],[4,4],[5,5]]]
-    sess = tf.Session()
-    results = tf.constant(0)
-    print(sess.run(results))
-
-    for i in range(3):
-        result_beta = tf.slice(states, [0,i,0],[-1,1,-1]) * (i+1)
-        result_beta = tf.reshape(result_beta,[2,2])
-        print(sess.run(result_beta))
-        results = tf.add(results, result_beta)
-        print(results.shape[0])
-    print(sess.run(results))
-
-
 def time_test():
     # 64 * 128   64 * 128 * 25
     sess = tf.Session()
@@ -340,13 +430,36 @@ def draw_result():
 
 # draw_result()
 
+def drawHist():
+    n_groups = 4
+    means_men = (0.527827, 0.536711, 0.541647, 0.534405)
+
+
+    fig, ax = plt.subplots()
+    index = np.arange(n_groups)
+    bar_width = 0.35
+
+    opacity = 1
+    rects1 = plt.bar(index, means_men, bar_width, alpha=opacity, color='grey', label='Men')
+    # rects2 = plt.bar(index + bar_width, means_women, bar_width, alpha=opacity, color='r', label='Women')
+
+    plt.xlabel('')
+    plt.ylabel('accuracy')
+    plt.title('Testing Results')
+    plt.xticks(index, ('BiLSTM', 'position', 'time', 'event'))
+    plt.ylim(0.4, 0.6)
+    # plt.legend()
+
+    plt.tight_layout()
+    plt.show()
+
+# drawHist()
 
 def absolute_path():
     PROJECT_PATH = os.path.dirname(os.path.realpath(__file__))  # 获取项目根目录
     data_file_path = os.path.join(PROJECT_PATH, "Dict/stopWord.txt")  # 文件路径
     stop_words = [w.strip() for w in open(data_file_path, 'r', encoding='GBK').readlines()]
     stop_words.extend(['\n','\t',' '])
-
 
 Chain_Lens = 5
 
@@ -380,10 +493,11 @@ def adjacency_matrix():
         for j in range(25):
             dic_count[i] += adj_mat[i][j]
         for j in range(25):
-            if adj_mat[i][j]/dic_count[i] > regularization:
-                adj_mat[i][j] = 1
-            else:
-                adj_mat[i][j] = 0
+            # if adj_mat[i][j]/dic_count[i] > regularization:
+            #     adj_mat[i][j] = 1
+            # else:
+            #     adj_mat[i][j] = 0
+            adj_mat[i][j] = adj_mat[i][j]/dic_count[i]
 
     pickle.dump(adj_mat, open('/Users/zoe/Documents/event_extraction/majorEventDump/adjacency.regular', 'wb'))
 
@@ -404,11 +518,10 @@ def adjacency_matrix():
     ax.set_yticks(ticks)
     ax.set_xticklabels(np.arange(0, 26, 5))  # 生成x轴标签
     ax.set_yticklabels(np.arange(0, 26, 5))
-    plt.savefig("/Users/zoe/Documents/event_extraction/latex/picture/adjacency.png")
+    plt.savefig("/Users/zoe/Documents/event_extraction/latex/picture/adjacency1.png")
     plt.show()
 
-
-adjacency_matrix()
+# adjacency_matrix()
 
 
 def generate_chain(eventsList):
@@ -459,19 +572,19 @@ def get_pickle():
 
     # ********数据链条的生成********
     x_train,y_train = generate_chain(eventsTrain)
-    f_w = open('/Users/zoe/Documents/event_extraction/majorEventDump/pickle.data.train','wb')
+    f_w = open('/Users/zoe/Documents/event_extraction/majorEventDump/pickle.data.new.train','wb')
     pickle.dump(np.array(x_train).astype(int), f_w)
     pickle.dump(np.array(y_train).astype(int), f_w)
     f_w.close()
 
     x_dev,y_dev = generate_chain(eventsDev)
-    f_w = open('/Users/zoe/Documents/event_extraction/majorEventDump/pickle.data.dev','wb')
+    f_w = open('/Users/zoe/Documents/event_extraction/majorEventDump/pickle.data.new.dev','wb')
     pickle.dump(np.array(x_dev).astype(int), f_w)
     pickle.dump(np.array(y_dev).astype(int), f_w)
     f_w.close()
 
     x_test, y_test = generate_chain(eventsTest)
-    f_w = open('/Users/zoe/Documents/event_extraction/majorEventDump/pickle.data.test', 'wb')
+    f_w = open('/Users/zoe/Documents/event_extraction/majorEventDump/pickle.data.new.test', 'wb')
     pickle.dump(np.array(x_test).astype(int), f_w)
     pickle.dump(np.array(y_test).astype(int), f_w)
     f_w.close()

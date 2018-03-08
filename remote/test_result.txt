@@ -34,6 +34,7 @@ testing instance = 85882, total cost = 5.6563, testing accuracy = 0.477622
 ***TESTING RESULT***EPOCH=5
 testing instance = 85882, total cost = 7.32997, testing accuracy = 0.473349
 
+======================特征维数拼接的方法=================================
 baseline__mlp____2018-03-03 15:09:10:
 ***TESTING RESULT***EPOCH=1
 testing instance = 85882, total cost = 1.70083, testing accuracy = 0.523927
@@ -45,8 +46,6 @@ testing instance = 85882, total cost = 5.58565, testing accuracy = 0.472802
 testing instance = 85882, total cost = 7.64585, testing accuracy = 0.483385
 ***TESTING RESULT***EPOCH=5
 testing instance = 85882, total cost = 11.95, testing accuracy = 0.473128
-
-
 
 time__mlp____2018-03-03 20:10:21:
 ***TESTING RESULT***EPOCH=1
@@ -72,4 +71,181 @@ testing instance = 85882, total cost = 9.50136, testing accuracy = 0.4414
 ***TESTING RESULT***EPOCH=5
 testing instance = 85882, total cost = 12.6343, testing accuracy = 0.439584
 
-event__mlp____2018-03-03 22:17:30:
+event__mlp____2018-03-04 11:55:44:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.77291, testing accuracy = 0.526756
+***TESTING RESULT***EPOCH=2
+testing instance = 85882, total cost = 3.96711, testing accuracy = 0.483979
+***TESTING RESULT***EPOCH=3
+testing instance = 85882, total cost = 5.16183, testing accuracy = 0.479485
+***TESTING RESULT***EPOCH=4
+testing instance = 85882, total cost = 6.40396, testing accuracy = 0.46712
+***TESTING RESULT***EPOCH=5
+testing instance = 85882, total cost = 8.53303, testing accuracy = 0.461124
+======================特征维数拼接的方法=================================
+
+======================特征维数加权相加的方法==============================
+baseline__mlp____2018-03-05 11:11:12:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.67543, testing accuracy = 0.527827
+***TESTING RESULT***EPOCH=2
+testing instance = 85882, total cost = 4.095, testing accuracy = 0.486692
+***TESTING RESULT***EPOCH=3
+testing instance = 85882, total cost = 4.96875, testing accuracy = 0.476807
+***TESTING RESULT***EPOCH=4
+testing instance = 85882, total cost = 7.86751, testing accuracy = 0.476365
+***TESTING RESULT***EPOCH=5
+testing instance = 85882, total cost = 9.24223, testing accuracy = 0.467446
+
+position__mlp____2018-03-05 11:24:40:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.74478, testing accuracy = 0.536711
+***TESTING RESULT***EPOCH=2
+testing instance = 85882, total cost = 3.99648, testing accuracy = 0.487961
+***TESTING RESULT***EPOCH=3
+testing instance = 85882, total cost = 5.51333, testing accuracy = 0.487088
+***TESTING RESULT***EPOCH=4
+testing instance = 85882, total cost = 7.3475, testing accuracy = 0.472208
+***TESTING RESULT***EPOCH=5
+testing instance = 85882, total cost = 8.67377, testing accuracy = 0.471707
+
+time__mlp____2018-03-05 12:38:40:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.66843, testing accuracy = 0.541647
+***TESTING RESULT***EPOCH=2
+testing instance = 85882, total cost = 4.12943, testing accuracy = 0.479252
+***TESTING RESULT***EPOCH=3
+testing instance = 85882, total cost = 5.67295, testing accuracy = 0.48413
+***TESTING RESULT***EPOCH=4
+testing instance = 85882, total cost = 7.29917, testing accuracy = 0.46776
+***TESTING RESULT***EPOCH=5
+testing instance = 85882, total cost = 9.13664, testing accuracy = 0.442623
+
+event__mlp____2018-03-05 13:16:15:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.68082, testing accuracy = 0.534405
+***TESTING RESULT***EPOCH=2
+testing instance = 85882, total cost = 4.0674, testing accuracy = 0.462882
+***TESTING RESULT***EPOCH=3
+testing instance = 85882, total cost = 5.33645, testing accuracy = 0.464873
+***TESTING RESULT***EPOCH=4
+testing instance = 85882, total cost = 5.91675, testing accuracy = 0.46358
+***TESTING RESULT***EPOCH=5
+testing instance = 85882, total cost = 8.68648, testing accuracy = 0.445639
+
+baseline__gcn____2018-03-05 15:24:37:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 2.75877, testing accuracy = 0.219996
+***TESTING RESULT***EPOCH=2
+testing instance = 85882, total cost = 2.69662, testing accuracy = 0.235446
+***TESTING RESULT***EPOCH=3
+testing instance = 85882, total cost = 2.52123, testing accuracy = 0.2354
+***TESTING RESULT***EPOCH=4
+testing instance = 85882, total cost = 2.50517, testing accuracy = 0.235551
+***TESTING RESULT***EPOCH=5
+testing instance = 85882, total cost = 2.44659, testing accuracy = 0.236389
+
+
+baseline__mlp____hidden_units:128__2018-03-06 13:50:32:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.67749, testing accuracy = 0.54046
+
+baseline__mlp____hidden_units:64__2018-03-06 10:04:18:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.6174, testing accuracy = 0.548773
+
+baseline__mlp____hidden_units:32__2018-03-06 14:06:38:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.66345, testing accuracy = 0.542264
+
+baseline__mlp____hidden_units:16__2018-03-06 14:24:19:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.63419, testing accuracy = 0.542392
+
+
+
+baseline__mlp__lstm__hidden_units:64__lr:0.001__2018-03-06 20:17:26:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.64892, testing accuracy = 0.546514
+
+*******************以上lr都是0.001************
+
+baseline__mlp____hidden_units:64__lr:0.0005__2018-03-06 20:50:35:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.69349, testing accuracy = 0.542218
+
+baseline__mlp____hidden_units:64__lr:0.001__2018-03-07 10:09:22:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.63834, testing accuracy = 0.544477
+
+baseline__mlp____hidden_units:64__lr:0.005__2018-03-06 20:44:27:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.69396, testing accuracy = 0.514926
+
+baseline__mlp____hidden_units:64__lr:0.01__2018-03-06 20:23:13:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.70465, testing accuracy = 0.526837
+
+baseline__mlp____hidden_units:64__lr:0.1__2018-03-07 10:19:00:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 2.55987, testing accuracy = 0.172527
+
+*******************以上batch都是128************
+
+baseline__mlp____hidden_units:64__lr:0.001__batch:256__2018-03-07 11:58:07:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.61758, testing accuracy = 0.543422
+
+baseline__mlp____hidden_units:64__lr:0.001__batch:128__2018-03-07 10:40:30:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.65304, testing accuracy = 0.548994
+
+baseline__mlp____hidden_units:64__lr:0.001__batch:64__2018-03-07 11:12:04:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.67564, testing accuracy = 0.535407
+
+
+*******************以上embedding都是20************
+
+baseline__mlp____hidden_units:64__lr:0.001__batch:128__embedding:128__2018-03-07 18:57:24:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.65311, testing accuracy = 0.53366
+
+baseline__mlp____hidden_units:64__lr:0.001__batch:128__embedding:64__2018-03-07 12:09:20:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.64446, testing accuracy = 0.541636
+
+baseline__mlp____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-07 12:14:17:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.64551, testing accuracy = 0.545792
+
+baseline__mlp____hidden_units:64__lr:0.001__batch:128__embedding:20__2018-03-07 18:19:15:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.66221, testing accuracy = 0.5445
+
+
+*******************with best parameters************
+
+baseline__mlp____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-08 14:21:02:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.64103, testing accuracy = 0.545687
+
+position__mlp____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-08 14:26:59:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.65397, testing accuracy = 0.544267
+
+baseline__gcn____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-08 14:33:43:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 2.59803, testing accuracy = 0.249464
+
+time__mlp____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-08 14:49:50:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.66135, testing accuracy = 0.549762
+
+event__mlp____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-08 15:12:36:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.6353, testing accuracy = 0.549576
+
+all__mlp____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-08 15:48:38:
+***TESTING RESULT***EPOCH=1
+testing instance = 85882, total cost = 1.68215, testing accuracy = 0.533893
