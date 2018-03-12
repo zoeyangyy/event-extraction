@@ -31,10 +31,11 @@ flags = tf.app.flags
 FLAGS = flags.FLAGS
 
 # dev或test数据集
-opts, args = getopt.getopt(sys.argv[1:], "t:n:c:", ["type=","note=","cf="])
+opts, args = getopt.getopt(sys.argv[1:], "t:n:c:v:", ["type=","note=","cf=","cuda="])
 trainType = 'event'
 note = ''
 classifier = 'mlp'
+cuda = '1'
 for op, value in opts:
     if op == "--type":
         trainType = value
@@ -42,9 +43,11 @@ for op, value in opts:
         note = value
     if op == '--cf':
         classifier = value
+    if op == '--cuda':
+        cuda = value
 
-model_save_path = '../data/ckpt/'+trainType+classifier+'_add.ckpt'
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+model_save_path = '../data/ckpt/'+trainType+classifier+'.ckpt'
+os.environ["CUDA_VISIBLE_DEVICES"] = cuda
 
 config = tf.ConfigProto(log_device_placement=True, allow_soft_placement=True)
 config.gpu_options.per_process_gpu_memory_fraction = 0.9 # 占用GPU90%的显存
@@ -412,7 +415,7 @@ def shuffle_xy(x_mat_list, y_tag_list):
 # 需要改大
 # epoch = 1
 # _batch_size = 128
-training_iters = x_mat_list.shape[0]/FLAGS._batch_size
+training_iters = x_mat_list.shape[0] * FLAGS.epoch / FLAGS._batch_size
 # vocab_size = 25    # 样本中事件类型个数，根据处理数据的时候得到
 # embedding_size = 20
 trainNum = 100000
@@ -430,13 +433,7 @@ output_kp = tf.placeholder(tf.float32, [])
 weights = {
     # （feature_dim，128）
     'weight_add': tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_hidden_units])),
-    # 'baseline': tf.Variable(tf.random_normal([n_hidden_units * 2, n_hidden_units])),
-    # 'position': tf.Variable(tf.random_normal([n_hidden_units * 3, n_hidden_units])),
-    # 'time': tf.Variable(tf.random_normal([n_hidden_units * 3, n_hidden_units])),
-    # 'event': tf.Variable(tf.random_normal([n_hidden_units * 3, n_hidden_units])),
-
-    # 'baseline_gcn': tf.Variable(tf.random_normal([FLAGS.n_hidden_units + FLAGS.embedding_size, FLAGS.n_hidden_units])),
-    'baseline_gcn': tf.Variable(tf.random_normal([FLAGS.n_hidden_units + FLAGS.embedding_size, 1])),
+    'baseline_gcn': tf.Variable(tf.random_normal([FLAGS.n_hidden_units + FLAGS.embedding_size, FLAGS.n_hidden_units])),
     # （128，n_classes）
     'out': tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_classes])),
     'out_gcn': tf.Variable(tf.random_normal([FLAGS.n_hidden_units, 1]))
@@ -472,9 +469,9 @@ for i in range(FLAGS.n_classes):
         event_sub.append(tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_hidden_units])))
     event.append(event_sub)
 
-# baseline_gcn = list()
-# for _ in range(FLAGS.n_classes):
-#     baseline_gcn.append(tf.Variable(tf.random_normal([FLAGS.n_hidden_units +FLAGS.embedding_size, FLAGS.n_hidden_units])))
+baseline_gcn = list()
+for _ in range(FLAGS.n_classes):
+    baseline_gcn.append(tf.Variable(tf.random_normal([FLAGS.n_hidden_units +FLAGS.embedding_size, FLAGS.n_hidden_units])))
 
 batchNum = 0
 batch_xs = np.ones(shape=(FLAGS._batch_size, FLAGS.Chain_Lens*2)).astype(int)
@@ -578,8 +575,7 @@ def LSTM(X, weights, biases, time_v, position, event):
 
     # TODO labeling embedding 用上01矩阵  多层gcn
     # label embedding
-    label_embedding = tf.constant(0.1,shape=[FLAGS.n_classes, FLAGS.embedding_size])
-    # label_embedding = tf.nn.embedding_lookup(embedding, [i for i in range(FLAGS.n_classes)])
+    label_embedding = tf.nn.embedding_lookup(embedding, [i for i in range(FLAGS.n_classes)])
 
     # TODO 邻接矩阵归一化 不要01形式 ok
     adjacency_mat = pickle.load(open('../data/adjacency.regular', 'rb'))
@@ -588,11 +584,12 @@ def LSTM(X, weights, biases, time_v, position, event):
     for i in range(label_embedding.shape[0]):
         q = tf.constant(0.1, shape=[FLAGS.embedding_size])
         for j in range(label_embedding.shape[0]):
-            q = tf.add(q, label_embedding[j]*adjacency_mat[i][j])
-            # q = tf.add(q, label_embedding[j]*adjacency_mat[j][i])
+            if j == i:
+                q = tf.add(q, label_embedding[j])
+            else:
+                q = tf.add(q, label_embedding[j]*adjacency_mat[i][j])
         hidden_label_em = tf.concat([hidden_label_em, q], 0)
     hidden_label_em = tf.reshape(hidden_label_em[1:],[FLAGS.n_classes, FLAGS.embedding_size])
-
     # label embedding
 
     # cell
@@ -677,16 +674,15 @@ def LSTM(X, weights, biases, time_v, position, event):
     # TODO 拼接后进GCN
     if classifier == 'gcn':
         # gcn classifier
-        tf_sequence = tf.tile(tf_results, [FLAGS.n_classes, 1])
-        tf_label = tf.tile(label_embedding, [FLAGS._batch_size, 1])
+        tf_sequence = tf.reshape(tf.tile(tf_results, [1, FLAGS.n_classes]), [FLAGS._batch_size * FLAGS.n_classes, -1])
+        tf_label = tf.tile(hidden_label_em, [FLAGS._batch_size, 1])
         tf_concat = tf.reshape(tf.concat([tf_sequence, tf_label], 1), [FLAGS._batch_size, FLAGS.n_classes, -1])
         # gcn_l1 = tf.reshape(tf.matmul(tf_concat, weights[trainType+'_gcn']),[_batch_size, n_classes, -1])+biases[trainType]
 
         gcn_l1 = tf.constant(0.1, shape=[FLAGS._batch_size, 1])
         for i in range(FLAGS.n_classes):
-            gcn_beta = tf.reshape(tf.slice(tf_concat, [0, i, 0],[-1, 1, -1]), [FLAGS._batch_size, -1])
-            # gcn_beta = tf.matmul(gcn_beta, baseline_gcn[i])
-            gcn_beta = tf.matmul(gcn_beta, weights['baseline_gcn'])
+            gcn_beta = tf.reshape(tf.slice(tf_concat, [0, i, 0], [-1, 1, -1]), [FLAGS._batch_size, -1])
+            gcn_beta = tf.matmul(gcn_beta, baseline_gcn[i])
             gcn_l1 = tf.concat([gcn_l1, gcn_beta], 1)
         gcn_l1 = tf.reshape(tf.slice(gcn_l1, [0,1],[-1,-1]),[FLAGS._batch_size,FLAGS.n_classes,-1])
 
@@ -709,7 +705,7 @@ correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
 init = tf.global_variables_initializer()
-saver = tf.train.Saver(max_to_keep = FLAGS.epoch)
+saver = tf.train.Saver(max_to_keep = 100)
 
 
 def test_step(data_x, data_y):
@@ -731,12 +727,21 @@ with tf.Session(config=config) as sess:
     # training
     sess.run(init)
     epoch_i = 0
+
+    # 加载最后一个模型
+    saver.restore(sess, '../data/ckpt/{}{}.ckpt-{}'.format(trainType, classifier, 80000))
+
     print('***TRAINING PROCESS***')
     with open('train_result.txt', 'a') as file:
         file.write('\n{}__{}__{}__hidden_units:{}__lr:{}__batch:{}__embedding:{}__{}:\n'.format(trainType, classifier, note,
-                    FLAGS.n_hidden_units , FLAGS.lr, FLAGS._batch_size, FLAGS.embedding_size, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
+                    FLAGS.n_hidden_units, FLAGS.lr, FLAGS._batch_size, FLAGS.embedding_size, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
+
+        # 从第二个epoch加载模型
+        step = 80001
+        x_mat_list, y_tag_list = shuffle_xy(x_mat_list, y_tag_list)
         while epoch_i < FLAGS.epoch:
-            step = 0
+            # step = 0
+            cost_trend = []
             while step < training_iters:
                 batch_xs, batch_ys = next_batch()
                 batch_ys = np.reshape(batch_ys, [FLAGS._batch_size, -1])
@@ -746,6 +751,7 @@ with tf.Session(config=config) as sess:
                     y: batch_ys,
                     output_kp: 0.5
                 })
+                cost_trend.append(total_cost)
                 if step % 1000 == 0:
                     train_accuracy = sess.run(accuracy, feed_dict={
                         x: batch_xs,
@@ -753,25 +759,30 @@ with tf.Session(config=config) as sess:
                         output_kp: 0.5
                     })
                     print("step = %d, total cost = %g, training accuracy = %g" % (step,total_cost, train_accuracy))
+                    saver.save(sess, model_save_path, global_step=step)
                 step += 1
-            saver.save(sess, model_save_path, global_step=epoch_i)
+            # saver.save(sess, model_save_path, global_step=epoch_i)
             epoch_i += 1
+            # with open('cost_trend.txt', 'wb') as infile:
+            #     pickle.dump(cost_trend, infile)
+
             # testing
-            print ('***TRAINING RESULT***EPOCH={}***{}'.format(epoch_i, trainType))
-            x_mat_list, y_tag_list = shuffle_xy(x_mat_list, y_tag_list)
-            x_mat_list = x_mat_list[0:trainNum]
-            y_tag_list = y_tag_list[0:trainNum]
-            step = 0
-            test_accuracy, test_cost = 0.0, 0.0
-            while step < (trainNum / FLAGS._batch_size):
-                batch_xs, batch_ys = next_batch()
-                batch_accuracy, batch_cost = test_step(batch_xs, batch_ys)
-                test_accuracy += batch_accuracy
-                test_cost += batch_cost
-                step += 1
-            test_accuracy /= step
-            test_cost /= step
-            print ("training instance = %d, total cost = %g, training accuracy = %g" % (trainNum, test_cost, test_accuracy))
-            file.write('***TRAINING RESULT***EPOCH='+str(epoch_i)+'\n')
-            file.write("training instance = %d, total cost = %g, training accuracy = %g" %
-                       (trainNum, test_cost, test_accuracy)+'\n')
+
+            # print ('***TRAINING RESULT***EPOCH={}***{}'.format(epoch_i, trainType))
+            # x_mat_list, y_tag_list = shuffle_xy(x_mat_list, y_tag_list)
+            # x_mat_list = x_mat_list[0:trainNum]
+            # y_tag_list = y_tag_list[0:trainNum]
+            # step = 0
+            # test_accuracy, test_cost = 0.0, 0.0
+            # while step < (trainNum / FLAGS._batch_size):
+            #     batch_xs, batch_ys = next_batch()
+            #     batch_accuracy, batch_cost = test_step(batch_xs, batch_ys)
+            #     test_accuracy += batch_accuracy
+            #     test_cost += batch_cost
+            #     step += 1
+            # test_accuracy /= step
+            # test_cost /= step
+            # print ("training instance = %d, total cost = %g, training accuracy = %g" % (trainNum, test_cost, test_accuracy))
+            # file.write('***TRAINING RESULT***EPOCH='+str(epoch_i)+'\n')
+            # file.write("training instance = %d, total cost = %g, training accuracy = %g" %
+            #            (trainNum, test_cost, test_accuracy)+'\n')

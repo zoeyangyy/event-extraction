@@ -374,3 +374,25 @@ training instance = 100000, total cost = 2.40427, training accuracy = 0.210608
 baseline__gcn____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-08 17:08:29:
 ***TRAINING RESULT***EPOCH=1
 training instance = 100000, total cost = 2.05272, training accuracy = 0.298324
+
+baseline__gcn____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-08 19:29:21:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 2.05807, training accuracy = 0.297944
+
+baseline__gcn____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-08 19:36:34:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.52784, training accuracy = 0.564039
+
+baseline__gcn____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-08 19:43:25:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.51757, training accuracy = 0.556616
+
+baseline__gcn____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-08 19:49:53:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.50725, training accuracy = 0.565227
+
+time__gcn____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-08 20:14:18:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.49875, training accuracy = 0.560912
+***TRAINING RESULT***EPOCH=2
+training instance = 100000, total cost = 0.506146, training accuracy = 0.818804

@@ -19,21 +19,13 @@ import config
 import random
 import matplotlib.pyplot as plt
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
-
-config = tf.ConfigProto(log_device_placement=True, allow_soft_placement=True)
-config.gpu_options.per_process_gpu_memory_fraction = 0.9 # 占用GPU90%的显存
-config.gpu_options.allow_growth = True
-
-flags = tf.app.flags
-FLAGS = flags.FLAGS
-
 # dev或test数据集
-opts, args = getopt.getopt(sys.argv[1:], "t:d:n:c:", ["type=", "data=",'note=','cf='])
+opts, args = getopt.getopt(sys.argv[1:], "t:d:n:c:v:", ["type=", "data=",'note=','cf=','cuda='])
 trainType = 'all'
 data_type = 'test'
 note = ''
 classifier = 'mlp'
+cuda = '1'
 for op, value in opts:
     if op == "--type":
         trainType = value
@@ -43,7 +35,17 @@ for op, value in opts:
         note = value
     if op == '--cf':
         classifier = value
+    if op == '--cuda':
+        cuda = value
 
+os.environ["CUDA_VISIBLE_DEVICES"] = cuda
+
+config = tf.ConfigProto(log_device_placement=True, allow_soft_placement=True)
+config.gpu_options.per_process_gpu_memory_fraction = 0.9 # 占用GPU90%的显存
+config.gpu_options.allow_growth = True
+
+flags = tf.app.flags
+FLAGS = flags.FLAGS
 
 def get_xy_new():
     # global Chain_Lens
@@ -180,9 +182,9 @@ for i in range(FLAGS.n_classes):
         event_sub.append(tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_hidden_units])))
     event.append(event_sub)
 
-# baseline_gcn = list()
-# for _ in range(FLAGS.n_classes):
-#     baseline_gcn.append(tf.Variable(tf.random_normal([FLAGS.n_hidden_units +FLAGS.embedding_size, FLAGS.n_hidden_units])))
+baseline_gcn = list()
+for _ in range(FLAGS.n_classes):
+    baseline_gcn.append(tf.Variable(tf.random_normal([FLAGS.n_hidden_units +FLAGS.embedding_size, FLAGS.n_hidden_units])))
 
 
 batchNum = 0
@@ -208,8 +210,8 @@ def LSTM(X, weights, biases, time_v, position, event):
     # => (64 batch, 128 hidden)
 
     # label embedding
-    label_embedding = tf.constant(0.1,shape=[FLAGS.n_classes, FLAGS.embedding_size])
-    # label_embedding = tf.nn.embedding_lookup(embedding, [i for i in range(FLAGS.n_classes)])
+    # label_embedding = tf.constant(0.1,shape=[FLAGS.n_classes, FLAGS.embedding_size])
+    label_embedding = tf.nn.embedding_lookup(embedding, [i for i in range(FLAGS.n_classes)])
 
     adjacency_mat = pickle.load(open('../data/adjacency.regular', 'rb'))
     hidden_label_em = tf.constant([0.1])
@@ -217,11 +219,12 @@ def LSTM(X, weights, biases, time_v, position, event):
     for i in range(label_embedding.shape[0]):
         q = tf.constant(0.1, shape=[FLAGS.embedding_size])
         for j in range(label_embedding.shape[0]):
-            q = tf.add(q, label_embedding[j]*adjacency_mat[i][j])
-            # q = tf.add(q, label_embedding[j]*adjacency_mat[j][i])
+            if j==i:
+                q = tf.add(q, label_embedding[j])
+            else:
+                q = tf.add(q, label_embedding[j]*adjacency_mat[i][j])
         hidden_label_em = tf.concat([hidden_label_em, q], 0)
     hidden_label_em = tf.reshape(hidden_label_em[1:],[FLAGS.n_classes, FLAGS.embedding_size])
-
     # label embedding
 
 
@@ -304,22 +307,23 @@ def LSTM(X, weights, biases, time_v, position, event):
 
     if classifier == 'gcn':
         # gcn classifier
-        tf_sequence = tf.tile(tf_results, [FLAGS.n_classes, 1])
-        tf_label = tf.tile(label_embedding, [FLAGS._batch_size, 1])
+        tf_sequence = tf.reshape(tf.tile(tf_results, [1, FLAGS.n_classes]), [FLAGS._batch_size * FLAGS.n_classes, -1])
+        tf_label = tf.tile(hidden_label_em, [FLAGS._batch_size, 1])
         tf_concat = tf.reshape(tf.concat([tf_sequence, tf_label], 1), [FLAGS._batch_size, FLAGS.n_classes, -1])
         # gcn_l1 = tf.reshape(tf.matmul(tf_concat, weights[trainType+'_gcn']),[_batch_size, n_classes, -1])+biases[trainType]
 
         gcn_l1 = tf.constant(0.1, shape=[FLAGS._batch_size, 1])
         for i in range(FLAGS.n_classes):
             gcn_beta = tf.reshape(tf.slice(tf_concat, [0, i, 0],[-1, 1, -1]), [FLAGS._batch_size, -1])
-            # gcn_beta = tf.matmul(gcn_beta, baseline_gcn[i])
-            gcn_beta = tf.matmul(gcn_beta, weights['baseline_gcn'])
+            gcn_beta = tf.matmul(gcn_beta, baseline_gcn[i])
+            # gcn_beta = tf.matmul(gcn_beta, weights['baseline_gcn'])
             gcn_l1 = tf.concat([gcn_l1, gcn_beta], 1)
         gcn_l1 = tf.reshape(tf.slice(gcn_l1, [0,1],[-1,-1]),[FLAGS._batch_size,FLAGS.n_classes,-1])
 
         gcn_l2 = tf.nn.relu(gcn_l1)
         results = tf.reshape(tf.matmul(tf.reshape(gcn_l2, [FLAGS._batch_size*FLAGS.n_classes,-1]), weights['out_gcn']),
                              [FLAGS._batch_size, FLAGS.n_classes]) + biases['out']
+
         # gcn classifier
 
     return results
@@ -336,7 +340,7 @@ accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
 
 init = tf.global_variables_initializer()
-saver = tf.train.Saver(max_to_keep = FLAGS.epoch)
+saver = tf.train.Saver()
 
 
 def test_step(data_x, data_y, step):
@@ -359,14 +363,15 @@ def test_step(data_x, data_y, step):
 with tf.Session(config=config) as sess:
     # training
     sess.run(init)
-    with open('{}_result.txt'.format(data_type), 'a') as file:
+    with open('{}_result_new.txt'.format(data_type), 'a') as file:
         file.write('\n{}__{}__{}__hidden_units:{}__lr:{}__batch:{}__embedding:{}__{}:\n'.format(trainType, classifier, note,
-            FLAGS.n_hidden_units, FLAGS.lr,FLAGS._batch_size,FLAGS.embedding_size,time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())))
+            FLAGS.n_hidden_units, FLAGS.lr,FLAGS._batch_size,FLAGS.embedding_size,time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
         # file.write(trainType+'  '+note+'   '+time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ':\n')
-        for i in range(FLAGS.epoch):
-            saver.restore(sess, '../data/ckpt/{}{}_add.ckpt-{}'.format(trainType, classifier, i))
+        # for i in range(FLAGS.epoch):
+        for i in range(81000, 16164*FLAGS.epoch, 1000):
+            saver.restore(sess, '../data/ckpt/{}{}.ckpt-{}'.format(trainType, classifier, i))
             # testing
-            print('***TEST RESULT***')
+            print('***TEST RESULT***step={}***{}***{}'.format(i, trainType, classifier))
             step = 0
             test_accuracy, test_cost = 0.0, 0.0
             while step < training_iters:
@@ -378,6 +383,7 @@ with tf.Session(config=config) as sess:
             test_accuracy /= step
             test_cost /= step
             print("test instance = %d, total cost = %g, testing accuracy = %g" % (y_test.shape[0], test_cost, test_accuracy))
-            file.write('***TESTING RESULT***EPOCH=' + str(i+1) +'\n')
-            file.write("testing instance = %d, total cost = %g, testing accuracy = %g" %
-                       (y_test.shape[0], test_cost, test_accuracy) + '\n')
+            # file.write('***TESTING RESULT***EPOCH=' + str(i) +'\n')
+            # file.write("testing instance = %d, total cost = %g, testing accuracy = %g" %
+            #            (y_test.shape[0], test_cost, test_accuracy) + '\n')
+            file.write("%g" % test_accuracy + '\n')
