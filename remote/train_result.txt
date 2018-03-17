@@ -396,3 +396,465 @@ time__gcn____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-08 20:1
 training instance = 100000, total cost = 1.49875, training accuracy = 0.560912
 ***TRAINING RESULT***EPOCH=2
 training instance = 100000, total cost = 0.506146, training accuracy = 0.818804
+
+time__gcn____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-09 16:05:56:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.51118, training accuracy = 0.558264
+
+position__gcn____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-09 16:29:27:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.49675, training accuracy = 0.560242
+
+time__gcn____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-09 17:27:23:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.57242, training accuracy = 0.554298
+
+baseline__mlp____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-09 19:05:39:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.42874, training accuracy = 0.574339
+
+baseline__gcn____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-09 19:12:00:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.55971, training accuracy = 0.556616
+
+time__mlp____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-09 19:41:07:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.46876, training accuracy = 0.568694
+
+position__mlp____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-09 20:16:01:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.44779, training accuracy = 0.571242
+
+position__gcn____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-09 20:24:20:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.54409, training accuracy = 0.554318
+
+event__mlp____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-09 20:54:03:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.48985, training accuracy = 0.568484
+
+event__gcn____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-09 21:37:11:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.53944, training accuracy = 0.555667
+
+all__mlp____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-09 22:30:52:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.5087, training accuracy = 0.566216
+
+all__gcn____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-09 23:25:40:
+***TRAINING RESULT***EPOCH=1
+training instance = 100000, total cost = 1.56279, training accuracy = 0.556795
+
+baseline__mlp____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-10 11:48:43:
+
+baseline__mlp____hidden_units:64__lr:0.001__batch:128__embedding:32__2018-03-10 11:57:52:
+
+baseline__mlp__small lr__hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-10 12:01:40:
+
+baseline__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-10 12:13:45:
+
+event__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-10 15:07:06:
+
+time__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-10 15:06:23:
+
+baseline__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-10 15:02:17:
+
+position__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-10 15:03:39:
+
+event__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-10 15:08:35:
+
+time__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-10 15:09:57:
+
+baseline__gcn____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-10 15:33:30:
+
+position__gcn____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-10 15:35:48:
+
+all__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-10 15:19:07:
+
+event__gcn____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-10 16:23:06:
+
+time__gcn____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-10 16:28:50:
+
+all__gcn____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-10 17:33:30:
+
+baseline__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-11 15:51:00:
+
+position__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-11 15:55:48:
+
+baseline__gcn____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-11 15:54:08:
+
+position__gcn____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-11 15:56:53:
+
+time__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-11 16:05:24:
+
+event__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-11 16:08:50:
+
+event__gcn____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-11 16:09:27:
+
+time__gcn____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-11 16:08:12:
+
+all__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-11 16:10:37:
+
+all__gcn____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-11 16:12:09:
+
+baseline__mlp____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 20:37:16:
+
+position__mlp____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 20:38:02:
+
+time__mlp____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 20:38:52:
+
+event__mlp____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 20:39:15:
+
+baseline__gcn____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 20:42:36:
+
+position__gcn____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 20:44:51:
+
+all__mlp____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 20:40:07:
+
+time__gcn____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 21:05:57:
+
+event__gcn____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 21:08:40:
+
+all__gcn____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 21:24:40:
+
+baseline__mlp____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 23:24:58:
+
+position__mlp____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 23:25:12:
+
+event__mlp____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 23:25:33:
+
+time__mlp____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 23:25:24:
+
+baseline__gcn____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 23:30:04:
+
+position__gcn____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 23:32:26:
+
+all__mlp____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 23:35:22:
+
+time__gcn____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 23:53:47:
+
+event__gcn____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-11 23:53:28:
+
+all__gcn____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-12 00:51:26:
+
+all__mlp____hidden_units:64__lr:5e-06__batch:128__embedding:32__2018-03-12 16:32:18:
+
+baseline__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-12 23:54:27:
+0.592641
+0.882493
+0.905671
+
+baseline__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 08:25:10:
+0.598645
+
+position__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 08:40:39:
+
+position__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 08:29:25:
+0.596407
+
+baseline__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 08:50:42:
+0.589704
+0.598915
+0.606218
+
+position__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 08:51:06:
+0.585618
+0.598316
+0.604749
+
+position__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 09:11:16:
+0.594969
+0.598615
+0.603641
+
+time__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 14:09:38:
+
+time__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 14:14:01:
+
+position__mlp__baseline+position__hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 14:36:08:
+0.590793
+0.595758
+0.601752
+
+baseline__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 15:05:26:
+
+baseline__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 15:11:19:
+
+attention__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 13:19:33:
+0.58355
+0.595249
+0.598595
+
+baseline__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 15:20:00:
+
+baseline__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 15:22:49:
+
+baseline__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 15:24:43:
+
+baseline__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 15:25:59:
+
+baseline__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 15:29:30:
+
+time__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 14:27:52:
+0.591332
+0.60367
+0.605758
+
+position__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 15:58:16:
+0.588845
+0.593051
+0.602781
+
+attention__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 15:47:08:
+0.579364
+0.592311
+0.596238
+
+baseline__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 16:59:21:
+0.576836
+0.586077
+0.589674
+
+baseline__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 18:31:13:
+
+baseline__mlp____hidden_units:64__lr:0.0005__batch:128__embedding:32__2018-03-13 18:39:28:
+0.558764
+0.566636
+0.566696
+
+baseline__mlp__dropout=1__hidden_units:64__lr:0.005__batch:128__embedding:32__2018-03-13 19:09:07:
+0.567765
+0.570652
+0.575627
+0.570782
+0.575388
+
+baseline__mlp____hidden_units:64__lr:0.005__batch:128__embedding:32__2018-03-13 19:54:39:
+0.617467
+0.637688
+0.651894
+0.664802
+0.671266
+
+baseline__mlp____hidden_units:64__lr:0.005__batch:128__embedding:32__2018-03-13 19:49:04:
+0.565477
+0.570562
+0.571991
+
+baseline__mlp____hidden_units:64__lr:0.005__batch:128__embedding:32__2018-03-13 19:56:18:
+0.674053
+0.706112
+0.716422
+0.725164
+0.743057
+
+baseline__mlp____hidden_units:256__lr:0.001__batch:128__embedding:32__2018-03-13 20:11:04:
+0.566726
+0.569234
+0.570892
+0.575907
+0.577486
+
+baseline__mlp____hidden_units:256__lr:0.001__batch:128__embedding:32__2018-03-13 21:07:45:
+0.57258
+0.569283
+0.571232
+0.573729
+0.576227
+
+baseline__mlp____hidden_units:256__lr:0.001__batch:128__embedding:32__2018-03-13 21:58:15:
+0.830982
+0.834429
+0.837846
+0.841272
+0.845378
+
+position__mlp____hidden_units:256__lr:0.001__batch:128__embedding:32__2018-03-13 22:17:29:
+0.830433
+0.83316
+0.837916
+0.840843
+0.842481
+
+baseline__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 00:23:25:
+0.827216
+0.831532
+0.836467
+0.837936
+0.842401
+0.844889
+0.845648
+0.846697
+0.849784
+0.848815
+
+position__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 00:29:13:
+0.826377
+0.829993
+0.835168
+0.838215
+0.841542
+0.842561
+0.847007
+0.847287
+0.849175
+0.846667
+
+baseline__gcn____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 08:32:38:
+0.825308
+0.829793
+0.83378
+0.83361
+0.838995
+
+baseline__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 11:06:01:
+
+baseline__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 11:07:49:
+0.84368
+0.853221
+0.858476
+0.874391
+0.887298
+
+position__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 11:41:04:
+0.846787
+0.852981
+0.860354
+0.868896
+0.878826
+
+time__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 12:06:25:
+0.845668
+0.851153
+0.854709
+0.863231
+0.871024
+
+time__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 14:11:04:
+
+baseline__gcn____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 16:02:03:
+
+baseline__gcn__origin__hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 16:20:28:
+0.841332
+0.847476
+0.852611
+0.858626
+0.866059
+
+baseline__gcn____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 16:04:15:
+0.831352
+0.845279
+0.845688
+0.834729
+0.861273
+
+time__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 19:22:36:
+0.842801
+0.849654
+0.852432
+0.865399
+0.871463
+
+event__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 19:34:40:
+0.842791
+0.849724
+0.854769
+0.861393
+0.869415
+
+baseline__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 21:42:30:
+0.844779
+0.850064
+0.854759
+0.862182
+0.869136
+
+position__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 21:42:44:
+0.846527
+0.85389
+0.860184
+0.865339
+0.876049
+
+event__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 21:43:59:
+0.842971
+0.849295
+0.85407
+0.862272
+0.870504
+
+time__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-14 21:43:16:
+0.841392
+0.850034
+0.857037
+0.861753
+0.872412
+
+baseline__gcn____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-15 00:34:27:
+0.831871
+0.84376
+0.839534
+0.846697
+0.856738
+
+baseline__gcn____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-15 09:32:07:
+
+baseline__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-15 09:33:04:
+0.843081
+0.848895
+
+baseline__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-15 12:37:06:
+0.84325
+0.849684
+0.855289
+0.857557
+0.867987
+
+gcn__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-15 12:58:54:
+0.842671
+0.848895
+0.853031
+0.859485
+0.866788
+
+all__mlp____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-15 12:26:27:
+0.846667
+0.85377
+0.859365
+0.867887
+0.880475
+
+baseline__gcn____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-15 13:53:20:
+0.681066
+0.650146
+0.785036
+0.820992
+0.799772
+
+baseline__gcn____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-15 15:23:31:
+0.836267
+0.845019
+0.847806
+0.854819
+0.857777
+
+baseline__gcn__2__hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-15 17:40:45:
+0.817555
+0.811341
+0.825328
+0.83286
+0.832731
+
+baseline__gcn____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-16 00:30:43:
+0.831262
+0.813489
+0.845209
+0.846817
+0.86458
+
+baseline__gcn____hidden_units:128__lr:0.0005__batch:128__embedding:32__2018-03-16 02:16:38:
+0.770281
+0.834029
+0.817645
+0.844899
+0.856768

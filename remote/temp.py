@@ -11,8 +11,12 @@ import matplotlib
 from mpl_toolkits.mplot3d import Axes3D
 import pylab
 from matplotlib.font_manager import FontManager, FontProperties
+from matplotlib.ticker import  MultipleLocator
 import pandas as pd
 import numpy as np
+from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
+from sklearn import preprocessing
 import nltk
 import random
 import re
@@ -28,6 +32,8 @@ import math
 
 def getChineseFont():
     return FontProperties(fname='/System/Library/Fonts/PingFang.ttc')
+def getTimeFont():
+    return FontProperties(fname='/System/Library/Fonts/Times.ttc')
 
 def draw():
     x = [i for i in range(0, 70)]
@@ -131,15 +137,15 @@ def generat_class():
 
 
 def compareTrainTest():
-    with open('/Users/zoe/Documents/event_extraction/majorEventDump/majorEventAll.json', 'r',
+    with open('../data/majorEventAll.json', 'r',
               encoding='utf-8') as inputFile:
         events = json.load(inputFile)
 
-    with open('/Users/zoe/Documents/event_extraction/majorEventDump/typeCodeDump.json', 'r',
+    with open('../data/typeCodeDump.json', 'r',
               encoding='utf-8') as inputFile:
         code2type = json.load(inputFile)
 
-    with open('/Users/zoe/Documents/event_extraction/majorEventDump/Class.json', 'r', encoding='utf8') as inputFile:
+    with open('../data/Class.json', 'r', encoding='utf8') as inputFile:
         typeClass = json.load(inputFile)
 
     typeDict = dict()
@@ -167,17 +173,18 @@ def compareTrainTest():
                 new_event = dict()
                 new_event['date'] = s_event['date']
                 new_event['type'] = s_event['type']
-                if datetime.datetime.strptime(s_event['date'], '%Y%m%d') < datetime.datetime(2016, 1, 1):
+                if datetime.datetime(2000, 1, 1) <= datetime.datetime.strptime(s_event['date'], '%Y%m%d') < datetime.datetime(2016, 1, 1):
                     # countdict[code2type[s_event['type']]] += 1
-                    # countdict[s_event['type']] += 1
+                    countdict[s_event['type']] += 1
                     dictTrain[company].append(new_event)
                 elif datetime.datetime(2016, 1, 1) <= datetime.datetime.strptime(s_event['date'], '%Y%m%d') < datetime.datetime(2017, 1, 1):
                     # countdict[code2type[s_event['type']]] += 1
-                    # countdict[s_event['type']] += 1
+                    countdict[s_event['type']] += 1
                     dictDev[company].append(new_event)
                 elif datetime.datetime.strptime(s_event['date'], '%Y%m%d') >= datetime.datetime(2017, 1, 1):
                     # countdictTest[code2type[s_event['type']]] += 1
                     # countdictTest[s_event['type']] += 1
+                    countdict[s_event['type']] += 1
                     dictTest[company].append(new_event)
             except:
                 # error[code2type[s_event['type']]] += 1
@@ -194,17 +201,22 @@ def compareTrainTest():
     # with open('temp.txt', 'w') as f_w:
     #     json.dump(error, f_w, ensure_ascii=False, indent=1)
 
-    # countdict = sorted(countdict.items(), key=lambda d:d[1], reverse=True)
-    # countdict = {typeList[one[0]]:one[1] for one in countdict}
+    countdict = sorted(countdict.items(), key=lambda d:d[1], reverse=True)
+    countdict = {typeList[one[0]]:one[1] for one in countdict}
     # print(countdict)
-    #
+    for i in countdict:
+        print(i)
+    for i in countdict:
+        print(countdict[i])
+
+
     # countdictTest = sorted(countdictTest.items(), key=lambda d:d[1], reverse=True)
     # countdictTest = {typeList[one[0]]:one[1] for one in countdictTest}
     # print(countdictTest)
     #
-    # with open('/Users/zoe/Documents/event_extraction/majorEventDump/TrainClass_all.json', 'w', encoding='utf8') as f_w:
+    # with open('/Users/zoe/Documents/event_extraction/majorEventDump/TrainClass_all_2000.json', 'w', encoding='utf8') as f_w:
     #     json.dump(countdict, f_w, ensure_ascii=False, indent=1)
-    #
+
     # with open('/Users/zoe/Documents/event_extraction/majorEventDump/TestClass_L.json', 'w', encoding='utf8') as f_w:
     #     json.dump(countdictTest, f_w, ensure_ascii=False, indent=1)
 
@@ -235,7 +247,7 @@ def language_model():
             # Start_Date = datetime.datetime.strptime(eventSeq[beginIdx-5]['date'], '%Y%m%d')
             # freqDist[(eventSeq[beginIdx]['type'],eventSeq[beginIdx+1]['type'],eventSeq[beginIdx+2]['type'],
             #           eventSeq[beginIdx+3]['type'],eventSeq[beginIdx+4]['type'],eventSeq[beginIdx+5]['type'])] +=1
-            freqDist[(eventSeq[beginIdx]['type'],eventSeq[beginIdx+1]['type'])] += 1
+            freqDist[(eventSeq[beginIdx]['type'], eventSeq[beginIdx+1]['type'])] += 1
 
     correct = 0
     chains =  0
@@ -254,7 +266,7 @@ def language_model():
     print(chains)
     print(correct/chains)
 
-
+# language_model()
 
     # # save model    json key must be string
     # freqDist = dict((':'.join([str(i) for i in k]), v) for k, v in freqDist.items())
@@ -524,33 +536,26 @@ def draw_result2():
         except:
             pass
 
-    print(len(result))
-
-    epoch = [one for one in range(1, 17)]
+    epoch = [one for one in range(1, 98)]
+    fig = plt.figure()
     plt.ylabel('accuracy')
     plt.xlabel("epoch")
-    # plt.plot(epoch, result[0:65]+result[65*10:65*10+16], color='grey', linestyle='solid', label='baseline mlp')
-    # plt.plot(epoch, result[65:65*2]+result[65*10+16:65*10+16*2], color='#FF9500', linestyle='solid', label='position mlp')
-    # plt.plot(epoch, result[65*2:65*3]+result[65*10+16*2:65*10+16*3], color='#0C5DA5', linestyle='solid', label='time mlp')
-    # plt.plot(epoch, result[65*3:65*4]+result[65*10+16*3:65*10+16*4], color='#00AC6B', linestyle='solid', label='event mlp')
-    # plt.plot(epoch, result[65*4:65*5]+result[65*10+16*4:65*10+16*5], color='#E7003E', linestyle='solid', label='all mlp')
-    # plt.plot(epoch, result[65*5:65*6]+result[65*10+16*5:65*10+16*6], color='black', linestyle='solid', label='baseline gcn')
-    # plt.plot(epoch, result[65*6:65*7]+result[65*10+16*6:65*10+16*7], color='green', linestyle='solid', label='position gcn')
-    # plt.plot(epoch, result[65*7:65*8]+result[65*10+16*7:65*10+16*8], color='red', linestyle='solid', label='time gcn')
-    # plt.plot(epoch, result[65*8:65*9]+result[65*10+16*8:65*10+16*9], color='pink', linestyle='solid', label='event gcn')
-    # plt.plot(epoch, result[65*9:65*10]+result[65*10+16*9:65*10+16*10], color='blue', linestyle='solid', label='all gcn')
 
     color_li = ['grey', '#FF9500', '#0C5DA5', '#00AC6B', '#E7003E', 'black', 'green', 'red', 'pink', 'blue']
     label_li = ['baseline mlp', 'position mlp', 'time mlp', 'event mlp', 'all mlp', 'baseline gcn', 'position gcn', 'time gcn', 'event gcn', 'all gcn']
 
     for i in range(10):
-        plt.plot(epoch, result[650+160+16*i : 650+160+16*(i+1)], color=color_li[i], linestyle='solid', label=label_li[i])
-
-    plt.title('testing result')
-    plt.xticks(epoch)
-    plt.ylim([0.50,0.60])
-    plt.legend()
-    plt.show()
+        plt.plot(epoch, result[65*i:65*(i+1)] + result[650+16*i:650+16*(i+1)] + result[650+160+16*i : 650+160+16*(i+1)], color=color_li[i], linestyle='solid', label=label_li[i])
+        print(max(result[650+160+16*i : 650+160+16*(i+1)]))
+    # plt.title('testing result')
+    # ax = fig.add_subplot(111)
+    # xticks = np.arange(16, 98, 16)
+    # ax.set_xticks(xticks)  # 生成刻度
+    # ax.set_xticklabels(np.arange(1, 7))  # 生成x轴标签
+    # plt.ylim([0.50,0.60])
+    # plt.legend()
+    # plt.savefig("/Users/zoe/Documents/event_extraction/coling2018/picture/result.png")
+    # plt.show()
 
 # draw_result2()
 
@@ -586,7 +591,8 @@ def absolute_path():
     stop_words = [w.strip() for w in open(data_file_path, 'r', encoding='GBK').readlines()]
     stop_words.extend(['\n','\t',' '])
 
-Chain_Lens = 5
+
+Chain_Lens = 1
 
 
 def adjacency_matrix():
@@ -618,10 +624,6 @@ def adjacency_matrix():
         for j in range(25):
             dic_count[i] += adj_mat[i][j]
         for j in range(25):
-            # if adj_mat[i][j]/dic_count[i] > regularization:
-            #     adj_mat[i][j] = 1
-            # else:
-            #     adj_mat[i][j] = 0
             adj_mat[i][j] = adj_mat[i][j]/dic_count[i]
 
     pickle.dump(adj_mat, open('/Users/zoe/Documents/event_extraction/majorEventDump/adjacency.regular', 'wb'))
@@ -660,7 +662,7 @@ def generate_chain(eventsList):
                 if beginIdx >= Chain_Lens:
                     for i in range(Chain_Lens):
                         x_mat[Chain_Lens - i - 1] = eventSeq[beginIdx - i - 1]['type']
-                    Start_Date = datetime.datetime.strptime(eventSeq[beginIdx-5]['date'], '%Y%m%d')
+                    Start_Date = datetime.datetime.strptime(eventSeq[beginIdx-Chain_Lens]['date'], '%Y%m%d')
                     for i in range(Chain_Lens):
                         This_Date = datetime.datetime.strptime(eventSeq[beginIdx - i - 1]['date'], '%Y%m%d')
                         timeDelta = 0
@@ -672,7 +674,7 @@ def generate_chain(eventsList):
                             timeDelta = 3
                         else:
                             timeDelta = 4
-                        x_mat[Chain_Lens - i + 4] = timeDelta
+                        x_mat[2*Chain_Lens - i - 1] = timeDelta
                     x_mat_list.append(x_mat)
                     x_mat = np.zeros(shape=(Chain_Lens*2))
                     y_tag[e['type']] = 1
@@ -685,36 +687,82 @@ def get_pickle():
     global Chain_Lens
     # with open('/Users/zoe/Documents/event_extraction/majorEventDump/Category.json', 'r') as inputFile:
     #     Category = json.load(inputFile)
-    with open('/Users/zoe/Documents/event_extraction/majorEventDump/TrainSet.json', 'r',
+    with open('../data/TrainSet.json', 'r',
               encoding='utf-8') as inputFile:
         eventsTrain = json.load(inputFile)
-    with open('/Users/zoe/Documents/event_extraction/majorEventDump/DevSet.json', 'r',
+    with open('../data/DevSet.json', 'r',
               encoding='utf-8') as inputFile:
         eventsDev = json.load(inputFile)
-    with open('/Users/zoe/Documents/event_extraction/majorEventDump/TestSet.json', 'r',
+    with open('../data/TestSet.json', 'r',
               encoding='utf-8') as inputFile:
         eventsTest = json.load(inputFile)
 
     # ********数据链条的生成********
     x_train,y_train = generate_chain(eventsTrain)
-    f_w = open('/Users/zoe/Documents/event_extraction/majorEventDump/pickle.data.new.train','wb')
+    f_w = open('../data/pickle.data.1.train','wb')
     pickle.dump(np.array(x_train).astype(int), f_w)
-    pickle.dump(np.array(y_train).astype(int), f_w)
+    pickle.dump(np.array(y_train).astype(int), f_w, protocol=4)
     f_w.close()
 
     x_dev,y_dev = generate_chain(eventsDev)
-    f_w = open('/Users/zoe/Documents/event_extraction/majorEventDump/pickle.data.new.dev','wb')
+    f_w = open('../data/pickle.data.1.dev','wb')
     pickle.dump(np.array(x_dev).astype(int), f_w)
-    pickle.dump(np.array(y_dev).astype(int), f_w)
+    pickle.dump(np.array(y_dev).astype(int), f_w, protocol=4)
     f_w.close()
 
     x_test, y_test = generate_chain(eventsTest)
-    f_w = open('/Users/zoe/Documents/event_extraction/majorEventDump/pickle.data.new.test', 'wb')
+    f_w = open('../data/pickle.data.1.test', 'wb')
     pickle.dump(np.array(x_test).astype(int), f_w)
-    pickle.dump(np.array(y_test).astype(int), f_w)
+    pickle.dump(np.array(y_test).astype(int), f_w, protocol=4)
     f_w.close()
 
 # get_pickle()
+
+def scale():
+    adjacency_mat = pickle.load(open('/Users/zoe/Documents/event_extraction/majorEventDump/adjacency.data', 'rb'))
+    # adjacency_mat = dict(adjacency_mat)
+    myarray = np.zeros((25, 25), dtype='float32')
+    for key1, row in adjacency_mat.items():
+        for key2, value in row.items():
+            myarray[key1, key2] = value
+
+    X_scaled = preprocessing.scale(myarray)
+    print(X_scaled)
+    myarray = myarray + np.eye(25)
+    X_scaled = preprocessing.scale(myarray)
+    print(np.around(X_scaled, decimals=2))
+
+
+def adjacency_new():
+    f = open('/Users/zoe/Desktop/event', 'r')
+    a = f.readlines()
+    dic = dict()
+    for i in range(25):
+        dic[i] = dict()
+
+    index = 0
+    index_2 = 0
+    for i in a:
+        for j in i.split():
+            try:
+                dic[index][index_2] = float(j)
+                index_2 += 1
+                if index_2 == 25:
+                    index += 1
+                    index_2 = 0
+            except:
+                pass
+    print(dic)
+    f_w = open('/Users/zoe/Documents/event_extraction/majorEventDump/adjacency.new', 'wb')
+    pickle.dump(dic, f_w)
+    f_w.close()
+
+    myarray = np.zeros((25, 25), dtype='float32')
+    for key1, row in dic.items():
+        for key2, value in row.items():
+            myarray[key1, key2] = value
+
+    print(myarray)
 
 
 def pandas_plot():
@@ -765,7 +813,31 @@ def plot_temperature():
         actual = f_pred.readlines()
 
     dic = collections.defaultdict()
-
+    label_li = ["transaction",
+"stock suspension",
+"Initial Public Offerings",
+"additional issue",
+"allotment of shares",
+"dividend",
+"statement disclosure",
+"information change",
+"shareholders meeting",
+"legal issues",
+"shareholding reform",
+"transaction in assets",
+"stock ownership incentive",
+"split off",
+"review meeting of PORC",
+"fiscal taxation policy",
+"major project",
+"rumor clarification",
+"project investment",
+"business events",
+"natural hazard",
+"foreign investment",
+"pledge of stock right",
+"credit rating",
+"others"]
     for i in range(25):
         dic[i] = collections.defaultdict(int)
 
@@ -788,17 +860,19 @@ def plot_temperature():
 
     matplotlib.rcParams['xtick.direction'] = 'in'
     matplotlib.rcParams['ytick.direction'] = 'in'
-    fig = plt.figure()  # 调用figure创建一个绘图对象
+    fig = plt.figure(figsize=(10, 6))  # 调用figure创建一个绘图对象
     ax = fig.add_subplot(111)
     cax = ax.matshow(dataFrame, vmin=0, vmax=1)  # 绘制热力图，从0到1
     fig.colorbar(cax)  # 将matshow生成热力图设置为颜色渐变条
-    ticks = np.arange(0, 25, 5)  # 生成0-25，步长为5
+    ticks = np.arange(0, 25, 1)  # 生成0-25，步长为5
     ax.set_xticks(ticks)  # 生成刻度
     ax.set_yticks(ticks)
-    ax.set_xticklabels(np.arange(0, 26, 5))  # 生成x轴标签
-    ax.set_yticklabels(np.arange(0, 26, 5))
-    plt.savefig("/Users/zoe/Documents/event_extraction/latex/picture/label.png")
+    ax.set_xticklabels(label_li, rotation=90)  # 生成x轴标签
+    ax.set_yticklabels(label_li)
+    plt.savefig("/Users/zoe/Documents/event_extraction/coling2018/picture/label_new.png",bbox_inches='tight')
     plt.show()
+
+# plot_temperature()
 
 
 def draw_cost_trend():
@@ -1032,33 +1106,223 @@ def class_similarity():
                      , -1.03423446e-01, -9.38234106e-02, 1.59136936e-01, -9.97497961e-02
                      , 1.87239259e-01, 4.11633879e-01, -4.04454231e-01, 4.61508669e-02]]
 
-    dic = collections.defaultdict()
+    label_li = ["transaction",
+                "stock suspension",
+                "Initial Public Offerings",
+                "additional issue",
+                "allotment of shares",
+                "dividend",
+                "statement disclosure",
+                "information change",
+                "shareholders meeting",
+                "legal issues",
+                "shareholding reform",
+                "transaction in assets",
+                "stock ownership incentive",
+                "split off",
+                "review meeting of PORC",
+                "fiscal taxation policy",
+                "major project",
+                "rumor clarification",
+                "project investment",
+                "business events",
+                "natural hazard",
+                "foreign investment",
+                "pledge of stock right",
+                "credit rating",
+                "others"]
 
+    with open('/Users/zoe/Desktop/1.txt', 'r') as f:
+        col = f.readlines()
+    colo = [i[1:8] for i in col]
+
+    a = [colo[i] for i in np.random.randint(524, size=25)]
+
+    # pca = PCA(n_components=2)
+    # pca.fit(embedding)
+    # print(pca.explained_variance_ratio_)
+
+    X_pca = PCA(n_components=2).fit_transform(embedding)
+
+    plt.figure(figsize=(8, 8))
+    plt.subplot(111)
     for i in range(25):
-        dic[i] = collections.defaultdict(int)
-
-    for i in range(25):
-        for j in range(25):
-            dic[i][j] = cos_dist(embedding[i], embedding[j])
-
-    dic_seri = dict()
-    for i in range(25):
-        dic_seri[i] = pd.Series(dic[i])
-
-    dataFrame = pd.DataFrame(dic_seri)
-
-    matplotlib.rcParams['xtick.direction'] = 'in'
-    matplotlib.rcParams['ytick.direction'] = 'in'
-    fig = plt.figure()  # 调用figure创建一个绘图对象
-    ax = fig.add_subplot(111)
-    cax = ax.matshow(dataFrame, vmin=0, vmax=1)  # 绘制热力图，从0到1
-    fig.colorbar(cax)  # 将matshow生成热力图设置为颜色渐变条
-    ticks = np.arange(0, 25, 5)  # 生成0-25，步长为5
-    ax.set_xticks(ticks)  # 生成刻度
-    ax.set_yticks(ticks)
-    ax.set_xticklabels(np.arange(0, 26, 5))  # 生成x轴标签
-    ax.set_yticklabels(np.arange(0, 26, 5))
-    plt.savefig("/Users/zoe/Documents/event_extraction/coling2018/picture/class_similarity.png")
+        plt.scatter(X_pca[i, 0], X_pca[i, 1], c=a[i], label=label_li[i])
+    plt.legend(loc='right')
+    plt.savefig("/Users/zoe/Documents/event_extraction/coling2018/picture/class_pca.png")
     plt.show()
 
+    # , c = label_li
+    # dic = collections.defaultdict()
+    #
+    # for i in range(25):
+    #     dic[i] = collections.defaultdict(int)
+    #
+    # for i in range(25):
+    #     for j in range(25):
+    #         dic[i][j] = cos_dist(embedding[i], embedding[j])
+
+    # dic_seri = dict()
+    # for i in range(25):
+    #     dic_seri[i] = pd.Series(dic[i])
+
+    # dataFrame = pd.DataFrame(dic_seri)
+    #
+    # matplotlib.rcParams['xtick.direction'] = 'in'
+    # matplotlib.rcParams['ytick.direction'] = 'in'
+    # fig = plt.figure(figsize=(10,8))  # 调用figure创建一个绘图对象
+    # ax = fig.add_subplot(111)
+    # cax = ax.matshow(dataFrame, vmin=0, vmax=1)  # 绘制热力图，从0到1
+    # fig.colorbar(cax)  # 将matshow生成热力图设置为颜色渐变条
+    # ticks = np.arange(0, 25, 1)  # 生成0-25，步长为5
+    # ax.set_xticks(ticks)  # 生成刻度
+    # ax.set_yticks(ticks)
+    # ax.set_xticklabels(label_li, rotation=90)  # 生成x轴标签
+    # ax.set_yticklabels(label_li)
+    # plt.savefig("/Users/zoe/Documents/event_extraction/coling2018/picture/class_similarity.png")
+    # plt.show()
+
 # class_similarity()
+
+
+def compareTrainTest_smallclass():
+    with open('/Users/zoe/Documents/event_extraction/majorEventDump/majorEventAll.json', 'r',
+              encoding='utf-8') as inputFile:
+        events = json.load(inputFile)
+
+    # with open('/Users/zoe/Documents/event_extraction/majorEventDump/typeCodeDump.json', 'r',
+    #           encoding='utf-8') as inputFile:
+    #     code2type = json.load(inputFile)
+    #
+    # with open('/Users/zoe/Documents/event_extraction/majorEventDump/Class.json', 'r', encoding='utf8') as inputFile:
+    #     typeClass = json.load(inputFile)
+    #
+    # typeDict = dict()
+    # # typeList = [t for t in typeClass.keys()]
+    #
+    # for t in typeClass.keys():
+    #     for c in typeClass[t]:
+    #         typeDict[c] = len(typeDict)
+    #
+    # typeList = {typeDict[one]: one for one in typeDict}
+
+    # print(code2type)
+    ### 获得按时间排序的公司事件链条
+
+    # error = collections.defaultdict(int)
+    # countdict = collections.defaultdict(int)
+    # countdictTest = collections.defaultdict(int)
+    # dictTrain = collections.defaultdict(list)
+    # dictTest = collections.defaultdict(list)
+    # dictDev = collections.defaultdict(list)
+    countEachCp = collections.defaultdict(int)
+
+    for event in events:
+        company = event['S_INFO_WINDCODE']
+        countEachCp[len(event['event'])] += 1
+
+
+    # with open('/Users/zoe/Documents/event_extraction/majorEventDump/TrainSetSC.json', 'w') as f_w:
+    #     json.dump(dictTrain, f_w, indent=1)
+    # with open('/Users/zoe/Documents/event_extraction/majorEventDump/DevSetSC.json', 'w') as f_w:
+    #     json.dump(dictDev, f_w, indent=1)
+    # with open('/Users/zoe/Documents/event_extraction/majorEventDump/TestSetSC.json', 'w') as f_w:
+    #     json.dump(dictTest, f_w, indent=1)
+
+    # print(error, len(error))
+    # with open('temp.txt', 'w') as f_w:
+    #     json.dump(error, f_w, ensure_ascii=False, indent=1)
+
+
+
+    groupedDict= collections.defaultdict(int)
+
+    for key in countEachCp:
+        groupedDict[int(key)//100] += countEachCp[key]
+
+    countdict = sorted(groupedDict.items(), key=lambda d:d[0], reverse=False)
+    countdict = {one[0]:one[1] for one in countdict}
+    # print(countdict)
+
+    # countdictTest = sorted(countdictTest.items(), key=lambda d:d[1], reverse=True)
+    # countdictTest = {one[0]:one[1] for one in countdictTest}
+    # print(countdictTest)
+    #
+    with open('/Users/zoe/Documents/event_extraction/majorEventDump/EventLenEachCp.json', 'w', encoding='utf8') as f_w:
+        json.dump(countdict, f_w, ensure_ascii=False, indent=1)
+
+    # with open('/Users/zoe/Documents/event_extraction/majorEventDump/TestClass_L.json', 'w', encoding='utf8') as f_w:
+    #     json.dump(countdictTest, f_w, ensure_ascii=False, indent=1)
+
+# compareTrainTest_smallclass()
+
+
+def SC_similarity():
+    with open('/Users/zoe/Documents/event_extraction/majorEventDump/Class.json', 'r', encoding='utf8') as file:
+        cla = json.load(file)
+    class_length = [len(cla[i]) for i in cla]
+
+    embedding = pickle.load(open('remote/SC_embedding.txt', 'rb'))
+    label_li = ["stock trading",
+                "stock suspension",
+                "IPO",
+                "SPO",
+                "allotment of shares",
+                "dividend",
+                "performance disclosure",
+                "information change",
+                "shareholders meeting",
+                "legal issues",
+                "shareholding reform",
+                "transaction in assets",
+                "stock ownership incentive",
+                "split off",
+                "review meeting of PORC",
+                "fiscal taxation policy",
+                "major project",
+                "rumor clarification",
+                "project investment",
+                "business events",
+                "natural hazard",
+                "investment",
+                "pledge of stock right",
+                "credit rating",
+                "others"]
+
+    with open('/Users/zoe/Desktop/1.txt', 'r') as f:
+        col = f.readlines()
+    colo = [i[1:8] for i in col]
+
+    a = [colo[i] for i in np.random.randint(524, size=25)]
+
+    # pca = PCA(n_components=2)
+    # pca.fit(embedding)
+
+    X_pca = PCA(n_components=3)
+    # X_pca.fit(embedding)
+    # print(X_pca.explained_variance_ratio_)
+    X_pca = X_pca.fit_transform(embedding)
+
+    plt.figure(figsize=(8, 8))
+    axes = plt.subplot(111)
+    index = 0
+    size = [50,60,0,0,70]
+    mark = ["s","o","","","*"]
+    x = []
+    y = []
+    pltlist = []
+    for i in range(20):
+        for j in range(class_length[i]):
+            x.append(X_pca[index+j, 0])
+            y.append(X_pca[index+j, 1])
+        if i in [0,1,4]:
+            pltlist.append(axes.scatter(x, y, c=a[i], s=size[i],marker=mark[i]))
+        index += class_length[i]
+        x = []
+        y = []
+    matplotlib.rc('font', family='Times New Roman')
+    axes.legend(pltlist, label_li)
+    plt.savefig('/Users/zoe/Documents/event_extraction/coling2018/picture/SC_plot.png', dpi=600)
+    plt.show()
+
+SC_similarity()

@@ -11,9 +11,9 @@ import tensorflow as tf
 flags = tf.app.flags
 FLAGS = flags.FLAGS
 
-flags.DEFINE_float('lr', 0.000005, 'Initial learning rate.')
-flags.DEFINE_integer('epoch', 6, 'Number of epochs to train.')
-flags.DEFINE_integer('n_hidden_units', 64, 'Number of units in hidden layer.')
+flags.DEFINE_float('lr', 0.0005, 'Initial learning rate.')
+flags.DEFINE_integer('epoch', 5, 'Number of epochs to train.')
+flags.DEFINE_integer('n_hidden_units', 128, 'Number of units in hidden layer.')
 flags.DEFINE_integer('_batch_size', 128, '')
 flags.DEFINE_integer('vocab_size', 25, '样本中事件类型个数，根据处理数据的时候得到')
 flags.DEFINE_integer('embedding_size', 32, '事件embedding的大小')

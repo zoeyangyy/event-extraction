@@ -55,47 +55,53 @@ output_kp = tf.placeholder(tf.float32, [])
 weights = {
     # （feature_dim，128）
     'weight_add': tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_hidden_units])),
+    'baseline_gcn': tf.Variable(tf.random_normal([FLAGS.n_hidden_units +FLAGS.embedding_size, FLAGS.n_hidden_units])),
+    'attention': tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_hidden_units])),
+    'attention_2': tf.Variable(tf.random_normal([FLAGS.n_hidden_units, 1])),
     # 'baseline': tf.Variable(tf.random_normal([n_hidden_units * 2, n_hidden_units])),
     # 'position': tf.Variable(tf.random_normal([n_hidden_units * 3, n_hidden_units])),
     # 'time': tf.Variable(tf.random_normal([n_hidden_units * 3, n_hidden_units])),
     # 'event': tf.Variable(tf.random_normal([n_hidden_units * 3, n_hidden_units])),
 
-    'baseline_gcn': tf.Variable(tf.random_normal([FLAGS.n_hidden_units +FLAGS.embedding_size, FLAGS.n_hidden_units])),
     # （128，n_classes）
     'out': tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_classes])),
     'out_gcn': tf.Variable(tf.random_normal([FLAGS.n_hidden_units, 1]))
 }
 biases = {
     'l1': tf.Variable(tf.constant(0.1, shape=[FLAGS.n_hidden_units])),
+    'attention': tf.Variable(tf.constant(0.1, shape=[FLAGS.n_hidden_units])),
     # （n_classes）
     'out': tf.Variable(tf.constant(0.1, shape=[FLAGS.n_classes])),
 }
 add_weights = {
-    'position': tf.Variable(tf.constant(0.1)),
-    'time': tf.Variable(tf.constant(0.1)),
-    'event': tf.Variable(tf.constant(0.1))
+    'baseline': tf.Variable(tf.constant(0.25)),
+    'position': tf.Variable(tf.constant(0.25)),
+    'time': tf.Variable(tf.constant(0.25)),
+    'event': tf.Variable(tf.constant(0.25))
 }
+# time_v = {
+#     1: tf.Variable(tf.constant(0.1)),
+#     2: tf.Variable(tf.constant(0.1)),
+#     3: tf.Variable(tf.constant(0.1)),
+#     4: tf.Variable(tf.constant(0.1))
+# }
+# position = {
+#     0: tf.Variable(tf.constant(0.1)),
+#     1: tf.Variable(tf.constant(0.1)),
+#     2: tf.Variable(tf.constant(0.1)),
+#     3: tf.Variable(tf.constant(0.1)),
+#     4: tf.Variable(tf.constant(0.1))
+# }
+time_v = tf.get_variable('time', [4])
+position = tf.get_variable('position', [5])
+event = tf.get_variable('event', [FLAGS.n_classes, FLAGS.n_classes])
 
-time_v = {
-    1: tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_hidden_units])),
-    2: tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_hidden_units])),
-    3: tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_hidden_units])),
-    4: tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_hidden_units]))
-}
-position = {
-    0: tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_hidden_units])),
-    1: tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_hidden_units])),
-    2: tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_hidden_units])),
-    3: tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_hidden_units])),
-    4: tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_hidden_units]))
-}
-
-event = list()
-for i in range(FLAGS.n_classes):
-    event_sub = list()
-    for j in range(FLAGS.n_classes):
-        event_sub.append(tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_hidden_units])))
-    event.append(event_sub)
+# event = list()
+# for i in range(FLAGS.n_classes):
+#     event_sub = list()
+#     for j in range(FLAGS.n_classes):
+#         event_sub.append(tf.Variable(tf.random_normal([FLAGS.n_hidden_units, FLAGS.n_hidden_units])))
+#     event.append(event_sub)
 
 baseline_gcn = list()
 for _ in range(FLAGS.n_classes):
@@ -103,15 +109,18 @@ for _ in range(FLAGS.n_classes):
 
 embedding = tf.get_variable("embedding", [FLAGS.vocab_size, FLAGS.embedding_size], dtype=tf.float32)
 
+
 init = tf.global_variables_initializer()
 saver = tf.train.Saver()
 
 with tf.Session(config=config) as sess:
     sess.run(init)
 
-    with open('testing_result.txt', 'a') as file:
-        for i in range(81000, 16164*FLAGS.epoch, 1000):
-            saver.restore(sess, '../data/ckpt/{}{}.ckpt-{}'.format(trainType, classifier, i))
-            w = sess.run(embedding)
-            print(w)
-            file.write("add_weights : {}\n".format(w))
+    with open('SC_embedding.txt', 'wb') as file:
+        # for epoch_i in range(0, FLAGS.epoch):
+        #     for i in range(0, 13164, 1000):
+        saver.restore(sess, '../data/ckpt-att/{}{}{}.ckpt-{}'.format(trainType, classifier,note, 13004))
+        w = sess.run(embedding)
+        print(w)
+        # file.write("SC embedding : {}\n".format(w))
+        pickle.dump(w, file)
