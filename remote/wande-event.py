@@ -393,7 +393,7 @@ def get_xy_new():
 # x_mat_list, y_tag_list, x_test, y_test = get_xy_new()
 
 # TODO 数据按（00，17）划分 .new 数据集 ok
-f_data = open('../data/pickle.data.1.train', 'rb')
+f_data = open('../data/pickle.data.SC.train', 'rb')
 x_mat_list = pickle.load(f_data)
 y_tag_list = pickle.load(f_data)
 f_data.close()
@@ -781,6 +781,7 @@ cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, label
 # 预测结果
 pred_y = tf.cast(tf.argmax(pred, 1), tf.int32)
 train_op = tf.train.AdamOptimizer(FLAGS.lr).minimize(cost)
+
 
 k = 10  # targets对应的索引是否在最大的前k个数据中
 output = tf.nn.in_top_k(pred, tf.argmax(y, 1), k)

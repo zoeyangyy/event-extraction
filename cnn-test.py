@@ -54,6 +54,7 @@ def txt_features():
 
 # txt_features()
 
+
 def create_text():
     f_all = open('raw_file/test_all.txt', 'a')
     i = 0

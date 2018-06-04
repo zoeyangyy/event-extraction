@@ -2,12 +2,12 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="517236f3-7f76-489a-85d3-1093b31c998c" name="yyyang" url="http://10.88.3.60">
-        <fileTransfer host="10.88.3.60" port="1503" rootFolder="/home/yyyang" accessType="SFTP">
+      <webServer id="517236f3-7f76-489a-85d3-1093b31c998c" name="yyyang" url="http://10.88.3.62">
+        <fileTransfer host="10.88.3.62" port="22" rootFolder="/home/yyyang" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>
-          <option name="port" value="1503" />
+          <option name="port" value="22" />
         </fileTransfer>
       </webServer>
     </option>

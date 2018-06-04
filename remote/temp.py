@@ -592,7 +592,7 @@ def absolute_path():
     stop_words.extend(['\n','\t',' '])
 
 
-Chain_Lens = 1
+Chain_Lens = 5
 
 
 def adjacency_matrix():
@@ -699,24 +699,25 @@ def get_pickle():
 
     # ********数据链条的生成********
     x_train,y_train = generate_chain(eventsTrain)
-    f_w = open('../data/pickle.data.1.train','wb')
+    f_w = open('../data/pickle.data.5.train','wb')
     pickle.dump(np.array(x_train).astype(int), f_w)
     pickle.dump(np.array(y_train).astype(int), f_w, protocol=4)
     f_w.close()
 
     x_dev,y_dev = generate_chain(eventsDev)
-    f_w = open('../data/pickle.data.1.dev','wb')
+    f_w = open('../data/pickle.data.5.dev','wb')
     pickle.dump(np.array(x_dev).astype(int), f_w)
     pickle.dump(np.array(y_dev).astype(int), f_w, protocol=4)
     f_w.close()
 
     x_test, y_test = generate_chain(eventsTest)
-    f_w = open('../data/pickle.data.1.test', 'wb')
+    f_w = open('../data/pickle.data.5.test', 'wb')
     pickle.dump(np.array(x_test).astype(int), f_w)
     pickle.dump(np.array(y_test).astype(int), f_w, protocol=4)
     f_w.close()
 
 # get_pickle()
+
 
 def scale():
     adjacency_mat = pickle.load(open('/Users/zoe/Documents/event_extraction/majorEventDump/adjacency.data', 'rb'))
@@ -1307,7 +1308,7 @@ def SC_similarity():
     axes = plt.subplot(111)
     index = 0
     size = [50,60,0,0,70]
-    mark = ["s","o","","","*"]
+    mark = ["s", "o", "", "", "*"]
     x = []
     y = []
     pltlist = []
@@ -1321,8 +1322,8 @@ def SC_similarity():
         x = []
         y = []
     matplotlib.rc('font', family='Times New Roman')
-    axes.legend(pltlist, label_li)
+    axes.legend(pltlist, label_li, fontsize=17)
     plt.savefig('/Users/zoe/Documents/event_extraction/coling2018/picture/SC_plot.png', dpi=600)
     plt.show()
 
-SC_similarity()
+# SC_similarity()

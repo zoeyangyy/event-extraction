@@ -49,6 +49,7 @@ config.gpu_options.allow_growth = True
 flags = tf.app.flags
 FLAGS = flags.FLAGS
 
+
 def get_xy_new():
     # global Chain_Lens
 
@@ -411,7 +412,7 @@ cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, label
 pred_y = tf.cast(tf.argmax(pred, 1), tf.int32)
 # train_op = tf.train.AdamOptimizer(lr).minimize(cost)
 
-k = 1  # targets对应的索引是否在最大的前k个数据中
+k = 5  # targets对应的索引是否在最大的前k个数据中
 output = tf.nn.in_top_k(pred, tf.argmax(y, 1), k)
 accuracy = tf.reduce_mean(tf.cast(output, tf.float32))
 
